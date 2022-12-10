@@ -1,0 +1,3 @@
+int a = 3
+j
+int b = 3 * 2 + a
