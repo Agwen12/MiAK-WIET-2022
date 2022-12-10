@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.RuleNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-public class MyVisitor <T> implements  Python3Visitor<T>{
+public class MyVisitor <T> extends Python3BaseVisitor<T>{
     @Override
     public T visitSingle_input(Python3Parser.Single_inputContext ctx) {
         return null;
@@ -13,6 +13,7 @@ public class MyVisitor <T> implements  Python3Visitor<T>{
 
     @Override
     public T visitFile_input(Python3Parser.File_inputContext ctx) {
+        System.out.println("DUUUPPAA file");
         return null;
     }
 
@@ -113,16 +114,18 @@ public class MyVisitor <T> implements  Python3Visitor<T>{
 
     @Override
     public T visitPrint_stmt(Python3Parser.Print_stmtContext ctx) {
+        System.out.println(ctx.STRING().toString());
+        System.out.println("DUPPPPPPPPPPPA");
         return null;
     }
 
     @Override
     public T visitExpr(Python3Parser.ExprContext ctx) {
-        return null;
-    }
 
-    @Override
-    public T visit(ParseTree parseTree) {
+        int childrenCount = ctx.getChildCount();
+        if (childrenCount == 1) {
+            return (T) ctx.getChild(TerminalNode.class, 0);
+        }
         return null;
     }
 
@@ -133,7 +136,7 @@ public class MyVisitor <T> implements  Python3Visitor<T>{
 
     @Override
     public T visitTerminal(TerminalNode terminalNode) {
-        return null;
+        return (T) terminalNode.getSymbol().getText();
     }
 
     @Override

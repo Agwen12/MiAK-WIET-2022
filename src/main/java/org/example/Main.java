@@ -4,10 +4,8 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 
 //TODO Sprawdzanie typów
@@ -18,33 +16,20 @@ import java.io.InputStreamReader;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        try {
+            String source = "source.cmm";
+            CharStream charStream = CharStreams.fromFileName(source);
+            Python3Lexer lexer = new Python3Lexer(charStream);
+            CommonTokenStream tokenStream = new CommonTokenStream(lexer);
+            Python3Parser parser = new Python3Parser(tokenStream);
+            ParseTree tree = parser.single_input();
 
-        InputStreamReader a = new InputStreamReader(System.in);;
-        CharStream input = CharStreams.fromReader(a);
-        System.out.println("INPUT TO STRING:");
-        System.out.println(input.toString());
-// Get our lexer
-        Python3Lexer lexer = new Python3Lexer(input);
 
-// Get a list of matched tokens
-        CommonTokenStream tokens = new CommonTokenStream(lexer);
+            MyVisitor<Object> visitor = new MyVisitor<>();
+            visitor.visit(tree);
 
-// Pass the tokens to the parser
-        Python3Parser parser = new Python3Parser(tokens);
-
-        ParseTree tree = parser.file_input();
-        System.out.println("TREE GET TEXT:");
-        System.out.println(tree.getText());
-
-// Specify our entry point
-//        yourGrammarContext yourGrammarContext = yourGrammarRule.drinkSentence();
-
-// Walk it and attach our listener
-        ParseTreeWalker walker = new ParseTreeWalker();
-        OurFileWriter ourFileWriter = new OurFileWriter("output.c");
-        Python3Listener listener = new MyListener(ourFileWriter);
-        walker.walk(listener, tree);
-
-        ourFileWriter.writeToFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

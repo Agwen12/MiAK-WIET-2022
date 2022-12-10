@@ -1,9 +1,10 @@
 // Generated from java-escape by ANTLR 4.11.1
-package org.example;
 
+package org.example;
 
 import org.antlr.v4.runtime.misc.Interval;
 import java.util.*;
+
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
@@ -22,10 +23,10 @@ public class Python3Lexer extends Lexer {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		T__17=18, T__18=19, T__19=20, TYPE=21, STRING=22, NUMBER=23, INTEGER=24, 
-		BOOLEAN=25, NEWLINE=26, END=27, AND=28, OR=29, NOT=30, NAME=31, STRING_LITERAL=32, 
+		EQUAL=1, BREAK=2, CONTINUE=3, IF=4, COLON=5, ELIF=6, ELSE=7, WHILE=8, 
+		MUL=9, DIV=10, MOD=11, ADD=12, SUB=13, LT=14, GT=15, LE=16, GE=17, EQUAL_EQUAL=18, 
+		NOT_EQUAL=19, PRINT=20, TYPE=21, STRING=22, NUMBER=23, INTEGER=24, BOOLEAN=25, 
+		NEWLINE=26, END=27, AND=28, OR=29, NOT=30, NAME=31, STRING_LITERAL=32, 
 		DECIMAL_INTEGER=33, FLOAT_NUMBER=34, OPEN_PAREN=35, CLOSE_PAREN=36, OPEN_BRACK=37, 
 		CLOSE_BRACK=38, OPEN_BRACE=39, CLOSE_BRACE=40, SKIP_=41, UNKNOWN_CHAR=42;
 	public static String[] channelNames = {
@@ -38,9 +39,9 @@ public class Python3Lexer extends Lexer {
 
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"T__0", "T__1", "T__2", "T__3", "T__4", "T__5", "T__6", "T__7", "T__8", 
-			"T__9", "T__10", "T__11", "T__12", "T__13", "T__14", "T__15", "T__16", 
-			"T__17", "T__18", "T__19", "TYPE", "STRING", "NUMBER", "INTEGER", "BOOLEAN", 
+			"EQUAL", "BREAK", "CONTINUE", "IF", "COLON", "ELIF", "ELSE", "WHILE", 
+			"MUL", "DIV", "MOD", "ADD", "SUB", "LT", "GT", "LE", "GE", "EQUAL_EQUAL", 
+			"NOT_EQUAL", "PRINT", "TYPE", "STRING", "NUMBER", "INTEGER", "BOOLEAN", 
 			"NEWLINE", "END", "AND", "OR", "NOT", "NAME", "STRING_LITERAL", "DECIMAL_INTEGER", 
 			"FLOAT_NUMBER", "OPEN_PAREN", "CLOSE_PAREN", "OPEN_BRACK", "CLOSE_BRACK", 
 			"OPEN_BRACE", "CLOSE_BRACE", "SKIP_", "UNKNOWN_CHAR", "NON_ZERO_DIGIT", 
@@ -61,12 +62,12 @@ public class Python3Lexer extends Lexer {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, null, "TYPE", "STRING", 
-			"NUMBER", "INTEGER", "BOOLEAN", "NEWLINE", "END", "AND", "OR", "NOT", 
-			"NAME", "STRING_LITERAL", "DECIMAL_INTEGER", "FLOAT_NUMBER", "OPEN_PAREN", 
-			"CLOSE_PAREN", "OPEN_BRACK", "CLOSE_BRACK", "OPEN_BRACE", "CLOSE_BRACE", 
-			"SKIP_", "UNKNOWN_CHAR"
+			null, "EQUAL", "BREAK", "CONTINUE", "IF", "COLON", "ELIF", "ELSE", "WHILE", 
+			"MUL", "DIV", "MOD", "ADD", "SUB", "LT", "GT", "LE", "GE", "EQUAL_EQUAL", 
+			"NOT_EQUAL", "PRINT", "TYPE", "STRING", "NUMBER", "INTEGER", "BOOLEAN", 
+			"NEWLINE", "END", "AND", "OR", "NOT", "NAME", "STRING_LITERAL", "DECIMAL_INTEGER", 
+			"FLOAT_NUMBER", "OPEN_PAREN", "CLOSE_PAREN", "OPEN_BRACK", "CLOSE_BRACK", 
+			"OPEN_BRACE", "CLOSE_BRACE", "SKIP_", "UNKNOWN_CHAR"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();

@@ -5,9 +5,11 @@ tokens { INDENT, DEDENT }
 
 // this embedded code section will be copied to the generated file: Python3Lexer.java
 @lexer::header {
+package org.example;
 
 import org.antlr.v4.runtime.misc.Interval;
 import java.util.*;
+
 }
 
 
@@ -207,11 +209,33 @@ public List<String> getErrorMessages() {
  */
 
 @parser::header {                                                     //*** https://github.com/antlr/antlr4/blob/master/doc/grammars.md#actions-at-the-grammar-level
-
+package org.example;
 }
 
 
 // startRules:
+
+
+EQUAL : '=' ;
+BREAK : 'break' ;
+CONTINUE : 'continue' ;
+IF : 'if' ;
+COLON : ':' ;
+ELIF : 'elif' ;
+ELSE : 'else' ;
+WHILE : 'while' ;
+MUL : '*' ;
+DIV : '/' ;
+MOD : '%' ;
+ADD : '+' ;
+SUB : '-' ;
+LT : '<' ;
+GT : '>' ;
+LE : '<=' ;
+GE : '>=' ;
+EQUAL_EQUAL : '==' ;
+NOT_EQUAL : '!=' ;
+PRINT : 'print' ;
 single_input: NEWLINE | (NEWLINE | stmt)*;
 file_input:  (NEWLINE | stmt)* EOF;
 

@@ -1,7 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
-package org.example;
                                                      //*** https://github.com/antlr/antlr4/blob/master/doc/grammars.md#actions-at-the-grammar-level
-
+package org.example;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -20,10 +19,10 @@ public class Python3Parser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
-		T__17=18, T__18=19, T__19=20, TYPE=21, STRING=22, NUMBER=23, INTEGER=24, 
-		BOOLEAN=25, NEWLINE=26, END=27, AND=28, OR=29, NOT=30, NAME=31, STRING_LITERAL=32, 
+		EQUAL=1, BREAK=2, CONTINUE=3, IF=4, COLON=5, ELIF=6, ELSE=7, WHILE=8, 
+		MUL=9, DIV=10, MOD=11, ADD=12, SUB=13, LT=14, GT=15, LE=16, GE=17, EQUAL_EQUAL=18, 
+		NOT_EQUAL=19, PRINT=20, TYPE=21, STRING=22, NUMBER=23, INTEGER=24, BOOLEAN=25, 
+		NEWLINE=26, END=27, AND=28, OR=29, NOT=30, NAME=31, STRING_LITERAL=32, 
 		DECIMAL_INTEGER=33, FLOAT_NUMBER=34, OPEN_PAREN=35, CLOSE_PAREN=36, OPEN_BRACK=37, 
 		CLOSE_BRACK=38, OPEN_BRACE=39, CLOSE_BRACE=40, SKIP_=41, UNKNOWN_CHAR=42, 
 		INDENT=43, DEDENT=44;
@@ -58,12 +57,12 @@ public class Python3Parser extends Parser {
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, null, null, null, null, "TYPE", "STRING", 
-			"NUMBER", "INTEGER", "BOOLEAN", "NEWLINE", "END", "AND", "OR", "NOT", 
-			"NAME", "STRING_LITERAL", "DECIMAL_INTEGER", "FLOAT_NUMBER", "OPEN_PAREN", 
-			"CLOSE_PAREN", "OPEN_BRACK", "CLOSE_BRACK", "OPEN_BRACE", "CLOSE_BRACE", 
-			"SKIP_", "UNKNOWN_CHAR", "INDENT", "DEDENT"
+			null, "EQUAL", "BREAK", "CONTINUE", "IF", "COLON", "ELIF", "ELSE", "WHILE", 
+			"MUL", "DIV", "MOD", "ADD", "SUB", "LT", "GT", "LE", "GE", "EQUAL_EQUAL", 
+			"NOT_EQUAL", "PRINT", "TYPE", "STRING", "NUMBER", "INTEGER", "BOOLEAN", 
+			"NEWLINE", "END", "AND", "OR", "NOT", "NAME", "STRING_LITERAL", "DECIMAL_INTEGER", 
+			"FLOAT_NUMBER", "OPEN_PAREN", "CLOSE_PAREN", "OPEN_BRACK", "CLOSE_BRACK", 
+			"OPEN_BRACE", "CLOSE_BRACE", "SKIP_", "UNKNOWN_CHAR", "INDENT", "DEDENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -134,14 +133,6 @@ public class Python3Parser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_single_input; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterSingle_input(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitSingle_input(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitSingle_input(this);
 			else return visitor.visitChildren(this);
@@ -180,11 +171,11 @@ public class Python3Parser extends Parser {
 						match(NEWLINE);
 						}
 						break;
-					case T__1:
-					case T__2:
-					case T__3:
-					case T__7:
-					case T__19:
+					case BREAK:
+					case CONTINUE:
+					case IF:
+					case WHILE:
+					case PRINT:
 					case TYPE:
 						{
 						setState(48);
@@ -232,14 +223,6 @@ public class Python3Parser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_file_input; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterFile_input(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitFile_input(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitFile_input(this);
 			else return visitor.visitChildren(this);
@@ -267,11 +250,11 @@ public class Python3Parser extends Parser {
 					match(NEWLINE);
 					}
 					break;
-				case T__1:
-				case T__2:
-				case T__3:
-				case T__7:
-				case T__19:
+				case BREAK:
+				case CONTINUE:
+				case IF:
+				case WHILE:
+				case PRINT:
 				case TYPE:
 					{
 					setState(57);
@@ -314,14 +297,6 @@ public class Python3Parser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_stmt; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterStmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitStmt(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitStmt(this);
 			else return visitor.visitChildren(this);
@@ -335,9 +310,9 @@ public class Python3Parser extends Parser {
 			setState(67);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__1:
-			case T__2:
-			case T__19:
+			case BREAK:
+			case CONTINUE:
+			case PRINT:
 			case TYPE:
 				enterOuterAlt(_localctx, 1);
 				{
@@ -345,8 +320,8 @@ public class Python3Parser extends Parser {
 				simple_stmt();
 				}
 				break;
-			case T__3:
-			case T__7:
+			case IF:
+			case WHILE:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(66);
@@ -378,14 +353,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_simple_stmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterSimple_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitSimple_stmt(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitSimple_stmt(this);
@@ -432,14 +399,6 @@ public class Python3Parser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_small_stmt; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterSmall_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitSmall_stmt(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitSmall_stmt(this);
 			else return visitor.visitChildren(this);
@@ -460,15 +419,15 @@ public class Python3Parser extends Parser {
 				assignment_stmt();
 				}
 				break;
-			case T__1:
-			case T__2:
+			case BREAK:
+			case CONTINUE:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(73);
 				flow_stmt();
 				}
 				break;
-			case T__19:
+			case PRINT:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(74);
@@ -496,6 +455,7 @@ public class Python3Parser extends Parser {
 			return getRuleContext(DeclarationContext.class,0);
 		}
 		public TerminalNode NAME() { return getToken(Python3Parser.NAME, 0); }
+		public TerminalNode EQUAL() { return getToken(Python3Parser.EQUAL, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
@@ -503,14 +463,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_assignment_stmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterAssignment_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitAssignment_stmt(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitAssignment_stmt(this);
@@ -529,7 +481,7 @@ public class Python3Parser extends Parser {
 			setState(78);
 			match(NAME);
 			setState(79);
-			match(T__0);
+			match(EQUAL);
 			setState(80);
 			expr(0);
 			}
@@ -552,14 +504,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_declaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitDeclaration(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitDeclaration(this);
@@ -601,14 +545,6 @@ public class Python3Parser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_flow_stmt; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterFlow_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitFlow_stmt(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitFlow_stmt(this);
 			else return visitor.visitChildren(this);
@@ -622,14 +558,14 @@ public class Python3Parser extends Parser {
 			setState(86);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__1:
+			case BREAK:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(84);
 				break_stmt();
 				}
 				break;
-			case T__2:
+			case CONTINUE:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(85);
@@ -653,18 +589,11 @@ public class Python3Parser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Break_stmtContext extends ParserRuleContext {
+		public TerminalNode BREAK() { return getToken(Python3Parser.BREAK, 0); }
 		public Break_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_break_stmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterBreak_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitBreak_stmt(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitBreak_stmt(this);
@@ -679,7 +608,7 @@ public class Python3Parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(88);
-			match(T__1);
+			match(BREAK);
 			}
 		}
 		catch (RecognitionException re) {
@@ -695,18 +624,11 @@ public class Python3Parser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Continue_stmtContext extends ParserRuleContext {
+		public TerminalNode CONTINUE() { return getToken(Python3Parser.CONTINUE, 0); }
 		public Continue_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_continue_stmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterContinue_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitContinue_stmt(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitContinue_stmt(this);
@@ -721,7 +643,7 @@ public class Python3Parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(90);
-			match(T__2);
+			match(CONTINUE);
 			}
 		}
 		catch (RecognitionException re) {
@@ -748,14 +670,6 @@ public class Python3Parser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_compound_stmt; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterCompound_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitCompound_stmt(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitCompound_stmt(this);
 			else return visitor.visitChildren(this);
@@ -769,14 +683,14 @@ public class Python3Parser extends Parser {
 			setState(94);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__3:
+			case IF:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(92);
 				if_stmt();
 				}
 				break;
-			case T__7:
+			case WHILE:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(93);
@@ -800,6 +714,7 @@ public class Python3Parser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class If_stmtContext extends ParserRuleContext {
+		public TerminalNode IF() { return getToken(Python3Parser.IF, 0); }
 		public List<TerminalNode> OPEN_PAREN() { return getTokens(Python3Parser.OPEN_PAREN); }
 		public TerminalNode OPEN_PAREN(int i) {
 			return getToken(Python3Parser.OPEN_PAREN, i);
@@ -814,6 +729,10 @@ public class Python3Parser extends Parser {
 		public TerminalNode CLOSE_PAREN(int i) {
 			return getToken(Python3Parser.CLOSE_PAREN, i);
 		}
+		public List<TerminalNode> COLON() { return getTokens(Python3Parser.COLON); }
+		public TerminalNode COLON(int i) {
+			return getToken(Python3Parser.COLON, i);
+		}
 		public List<SuiteContext> suite() {
 			return getRuleContexts(SuiteContext.class);
 		}
@@ -821,18 +740,15 @@ public class Python3Parser extends Parser {
 			return getRuleContext(SuiteContext.class,i);
 		}
 		public TerminalNode END() { return getToken(Python3Parser.END, 0); }
+		public List<TerminalNode> ELIF() { return getTokens(Python3Parser.ELIF); }
+		public TerminalNode ELIF(int i) {
+			return getToken(Python3Parser.ELIF, i);
+		}
+		public TerminalNode ELSE() { return getToken(Python3Parser.ELSE, 0); }
 		public If_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_if_stmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterIf_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitIf_stmt(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitIf_stmt(this);
@@ -848,7 +764,7 @@ public class Python3Parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(96);
-			match(T__3);
+			match(IF);
 			setState(97);
 			match(OPEN_PAREN);
 			setState(98);
@@ -856,17 +772,17 @@ public class Python3Parser extends Parser {
 			setState(99);
 			match(CLOSE_PAREN);
 			setState(100);
-			match(T__4);
+			match(COLON);
 			setState(101);
 			suite();
 			setState(111);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__5) {
+			while (_la==ELIF) {
 				{
 				{
 				setState(102);
-				match(T__5);
+				match(ELIF);
 				setState(103);
 				match(OPEN_PAREN);
 				setState(104);
@@ -874,7 +790,7 @@ public class Python3Parser extends Parser {
 				setState(105);
 				match(CLOSE_PAREN);
 				setState(106);
-				match(T__4);
+				match(COLON);
 				setState(107);
 				suite();
 				}
@@ -886,12 +802,12 @@ public class Python3Parser extends Parser {
 			setState(117);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==T__6) {
+			if (_la==ELSE) {
 				{
 				setState(114);
-				match(T__6);
+				match(ELSE);
 				setState(115);
-				match(T__4);
+				match(COLON);
 				setState(116);
 				suite();
 				}
@@ -914,11 +830,13 @@ public class Python3Parser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class While_stmtContext extends ParserRuleContext {
+		public TerminalNode WHILE() { return getToken(Python3Parser.WHILE, 0); }
 		public TerminalNode OPEN_PAREN() { return getToken(Python3Parser.OPEN_PAREN, 0); }
 		public Cond_expressionContext cond_expression() {
 			return getRuleContext(Cond_expressionContext.class,0);
 		}
 		public TerminalNode CLOSE_PAREN() { return getToken(Python3Parser.CLOSE_PAREN, 0); }
+		public TerminalNode COLON() { return getToken(Python3Parser.COLON, 0); }
 		public SuiteContext suite() {
 			return getRuleContext(SuiteContext.class,0);
 		}
@@ -927,14 +845,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_while_stmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterWhile_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitWhile_stmt(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitWhile_stmt(this);
@@ -949,7 +859,7 @@ public class Python3Parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(121);
-			match(T__7);
+			match(WHILE);
 			setState(122);
 			match(OPEN_PAREN);
 			setState(123);
@@ -957,7 +867,7 @@ public class Python3Parser extends Parser {
 			setState(124);
 			match(CLOSE_PAREN);
 			setState(125);
-			match(T__4);
+			match(COLON);
 			setState(126);
 			suite();
 			setState(127);
@@ -988,14 +898,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_suite; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterSuite(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitSuite(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitSuite(this);
@@ -1049,14 +951,6 @@ public class Python3Parser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_cond_expression; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterCond_expression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitCond_expression(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitCond_expression(this);
 			else return visitor.visitChildren(this);
@@ -1092,18 +986,22 @@ public class Python3Parser extends Parser {
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
+		public List<TerminalNode> MUL() { return getTokens(Python3Parser.MUL); }
+		public TerminalNode MUL(int i) {
+			return getToken(Python3Parser.MUL, i);
+		}
+		public List<TerminalNode> DIV() { return getTokens(Python3Parser.DIV); }
+		public TerminalNode DIV(int i) {
+			return getToken(Python3Parser.DIV, i);
+		}
+		public List<TerminalNode> MOD() { return getTokens(Python3Parser.MOD); }
+		public TerminalNode MOD(int i) {
+			return getToken(Python3Parser.MOD, i);
+		}
 		public MultiplicativeExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_multiplicativeExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterMultiplicativeExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitMultiplicativeExpression(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitMultiplicativeExpression(this);
@@ -1165,18 +1063,18 @@ public class Python3Parser extends Parser {
 		public MultiplicativeExpressionContext multiplicativeExpression(int i) {
 			return getRuleContext(MultiplicativeExpressionContext.class,i);
 		}
+		public List<TerminalNode> ADD() { return getTokens(Python3Parser.ADD); }
+		public TerminalNode ADD(int i) {
+			return getToken(Python3Parser.ADD, i);
+		}
+		public List<TerminalNode> SUB() { return getTokens(Python3Parser.SUB); }
+		public TerminalNode SUB(int i) {
+			return getToken(Python3Parser.SUB, i);
+		}
 		public AdditiveExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_additiveExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterAdditiveExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitAdditiveExpression(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitAdditiveExpression(this);
@@ -1196,12 +1094,12 @@ public class Python3Parser extends Parser {
 			setState(150);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while (_la==T__11 || _la==T__12) {
+			while (_la==ADD || _la==SUB) {
 				{
 				{
 				setState(146);
 				_la = _input.LA(1);
-				if ( !(_la==T__11 || _la==T__12) ) {
+				if ( !(_la==ADD || _la==SUB) ) {
 				_errHandler.recoverInline(this);
 				}
 				else {
@@ -1238,6 +1136,22 @@ public class Python3Parser extends Parser {
 		public AdditiveExpressionContext additiveExpression(int i) {
 			return getRuleContext(AdditiveExpressionContext.class,i);
 		}
+		public List<TerminalNode> LT() { return getTokens(Python3Parser.LT); }
+		public TerminalNode LT(int i) {
+			return getToken(Python3Parser.LT, i);
+		}
+		public List<TerminalNode> GT() { return getTokens(Python3Parser.GT); }
+		public TerminalNode GT(int i) {
+			return getToken(Python3Parser.GT, i);
+		}
+		public List<TerminalNode> LE() { return getTokens(Python3Parser.LE); }
+		public TerminalNode LE(int i) {
+			return getToken(Python3Parser.LE, i);
+		}
+		public List<TerminalNode> GE() { return getTokens(Python3Parser.GE); }
+		public TerminalNode GE(int i) {
+			return getToken(Python3Parser.GE, i);
+		}
 		public TerminalNode NOT() { return getToken(Python3Parser.NOT, 0); }
 		public TerminalNode OPEN_PAREN() { return getToken(Python3Parser.OPEN_PAREN, 0); }
 		public TerminalNode CLOSE_PAREN() { return getToken(Python3Parser.CLOSE_PAREN, 0); }
@@ -1245,14 +1159,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_relationalExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterRelationalExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitRelationalExpression(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitRelationalExpression(this);
@@ -1363,6 +1269,14 @@ public class Python3Parser extends Parser {
 		public RelationalExpressionContext relationalExpression(int i) {
 			return getRuleContext(RelationalExpressionContext.class,i);
 		}
+		public List<TerminalNode> EQUAL_EQUAL() { return getTokens(Python3Parser.EQUAL_EQUAL); }
+		public TerminalNode EQUAL_EQUAL(int i) {
+			return getToken(Python3Parser.EQUAL_EQUAL, i);
+		}
+		public List<TerminalNode> NOT_EQUAL() { return getTokens(Python3Parser.NOT_EQUAL); }
+		public TerminalNode NOT_EQUAL(int i) {
+			return getToken(Python3Parser.NOT_EQUAL, i);
+		}
 		public TerminalNode NOT() { return getToken(Python3Parser.NOT, 0); }
 		public TerminalNode OPEN_PAREN() { return getToken(Python3Parser.OPEN_PAREN, 0); }
 		public TerminalNode CLOSE_PAREN() { return getToken(Python3Parser.CLOSE_PAREN, 0); }
@@ -1370,14 +1284,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_equalityExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterEqualityExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitEqualityExpression(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitEqualityExpression(this);
@@ -1401,12 +1307,12 @@ public class Python3Parser extends Parser {
 				setState(180);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while (_la==T__17 || _la==T__18) {
+				while (_la==EQUAL_EQUAL || _la==NOT_EQUAL) {
 					{
 					{
 					setState(176);
 					_la = _input.LA(1);
-					if ( !(_la==T__17 || _la==T__18) ) {
+					if ( !(_la==EQUAL_EQUAL || _la==NOT_EQUAL) ) {
 					_errHandler.recoverInline(this);
 					}
 					else {
@@ -1436,12 +1342,12 @@ public class Python3Parser extends Parser {
 				setState(190);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while (_la==T__17 || _la==T__18) {
+				while (_la==EQUAL_EQUAL || _la==NOT_EQUAL) {
 					{
 					{
 					setState(186);
 					_la = _input.LA(1);
-					if ( !(_la==T__17 || _la==T__18) ) {
+					if ( !(_la==EQUAL_EQUAL || _la==NOT_EQUAL) ) {
 					_errHandler.recoverInline(this);
 					}
 					else {
@@ -1493,14 +1399,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_logicalAndExpression; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterLogicalAndExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitLogicalAndExpression(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitLogicalAndExpression(this);
@@ -1601,14 +1499,6 @@ public class Python3Parser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_logicalOrExpression; }
 		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterLogicalOrExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitLogicalOrExpression(this);
-		}
-		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitLogicalOrExpression(this);
 			else return visitor.visitChildren(this);
@@ -1690,6 +1580,7 @@ public class Python3Parser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class Print_stmtContext extends ParserRuleContext {
+		public TerminalNode PRINT() { return getToken(Python3Parser.PRINT, 0); }
 		public TerminalNode STRING() { return getToken(Python3Parser.STRING, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
@@ -1698,14 +1589,6 @@ public class Python3Parser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_print_stmt; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterPrint_stmt(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitPrint_stmt(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitPrint_stmt(this);
@@ -1720,7 +1603,7 @@ public class Python3Parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(241);
-			match(T__19);
+			match(PRINT);
 			setState(244);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
@@ -1770,18 +1653,26 @@ public class Python3Parser extends Parser {
 			return getRuleContext(ExprContext.class,i);
 		}
 		public TerminalNode CLOSE_PAREN() { return getToken(Python3Parser.CLOSE_PAREN, 0); }
+		public List<TerminalNode> ADD() { return getTokens(Python3Parser.ADD); }
+		public TerminalNode ADD(int i) {
+			return getToken(Python3Parser.ADD, i);
+		}
+		public List<TerminalNode> SUB() { return getTokens(Python3Parser.SUB); }
+		public TerminalNode SUB(int i) {
+			return getToken(Python3Parser.SUB, i);
+		}
+		public List<TerminalNode> MUL() { return getTokens(Python3Parser.MUL); }
+		public TerminalNode MUL(int i) {
+			return getToken(Python3Parser.MUL, i);
+		}
+		public List<TerminalNode> DIV() { return getTokens(Python3Parser.DIV); }
+		public TerminalNode DIV(int i) {
+			return getToken(Python3Parser.DIV, i);
+		}
 		public ExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expr; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).enterExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof Python3Listener ) ((Python3Listener)listener).exitExpr(this);
-		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitExpr(this);
@@ -1849,7 +1740,7 @@ public class Python3Parser extends Parser {
 			setState(266);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,29,_ctx);
-			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
@@ -1888,7 +1779,7 @@ public class Python3Parser extends Parser {
 						setState(262); 
 						_errHandler.sync(this);
 						_alt = getInterpreter().adaptivePredict(_input,28,_ctx);
-					} while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER );
+					} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 					}
 					} 
 				}
