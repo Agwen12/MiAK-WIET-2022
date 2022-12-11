@@ -21,17 +21,20 @@ public class StmtProcessor {
     public List<String> getEvaluationResult() {
         List<String> evaluations = new ArrayList<>();
         stmtList = stmtList.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        for (Stmt stmt: stmtList) {
+        for (Stmt stmt : stmtList) {
             if (stmt instanceof Assignment ass) {
-                values.put(ass.name, getEval(ass.value));
-                evaluations.add(ass.name + " declared with value: " + getEval(ass.value));
+                switch (ass.type) {
+                    case "int", "boolean", "float", "string" -> {
+                        values.put(ass.name, getEval(ass.value));
+                        evaluations.add(ass.name + " declared with value: " + getEval(ass.value));
+                    }
+                }
             } else {
                 String input = stmt.toString();
                 int res = getEval(stmt);
                 evaluations.add(input + " is " + res);
             }
         }
-
 
 
         return evaluations;
@@ -105,5 +108,4 @@ public class StmtProcessor {
 
         return res;
     }
-
 }

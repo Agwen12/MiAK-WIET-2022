@@ -60,7 +60,8 @@ file_input: (NEWLINE | stmt)* EOF #FileInput
 stmt: assignment_stmt
     | expr
     | logical_expr
-//    | compound_stmt #CompuntStmt
+    | condition
+    | print_stmt
     ;
 
 //small_stmt: assignment_stmt # Assignment
@@ -70,7 +71,6 @@ stmt: assignment_stmt
 //          ;
 
 assignment_stmt: TYPE NAME '=' expr # Assignment
-               | 'string' NAME '=' STRING # AssignmentString
                ;
 //flow_stmt: break_stmt
 //         | continue_stmt
@@ -82,7 +82,7 @@ assignment_stmt: TYPE NAME '=' expr # Assignment
 //continue_stmt: 'continue'
 //             ;
 
-print_stmt: 'print' (STRING | expr) # Print
+print_stmt: PRINT (STRING | expr) # Print
           ;
 
 expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
@@ -93,7 +93,8 @@ expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
     | NAME          # Variable
     | NUMBER        # Number
     | FLOAT_NUMBER  # FloatNumber
-    | BOOLEAN       # Boolean
+    | BOOLEAN       # Bool
+    | STRING        # StringWord
     ;
 
 logical_expr: NOT OPEN_PAREN logical_expr CLOSE_PAREN  # Not
@@ -108,10 +109,14 @@ logical_expr: NOT OPEN_PAREN logical_expr CLOSE_PAREN  # Not
             | expr NOT_EQUAL expr  # Neq
             ;
 
-//compound_stmt: if_stmt | while_stmt;
-//if_stmt: 'if' OPEN_PAREN cond_expression CLOSE_PAREN ':' suite ('elif' OPEN_PAREN cond_expression CLOSE_PAREN ':' suite)* ('else'  ':' suite)? END;
-//while_stmt: 'while' OPEN_PAREN cond_expression CLOSE_PAREN ':' suite END;
-//suite:  NEWLINE stmt+;
+condition: IF condition_block (ELIF condition_block)* (ELSE block)?
+         ;
+
+condition_block: OPEN_PAREN logical_expr CLOSE_PAREN block
+               ;
+
+block: COLON NEWLINE (stmt NEWLINE)* END NEWLINE?
+     ;
 
 /*
  * lexer rules
@@ -139,8 +144,8 @@ INTEGER
  ;
 
 BOOLEAN
- : 'Yass'
- | 'Nyet'
+ : 'true'
+ | 'false'
  ;
 
 NEWLINE

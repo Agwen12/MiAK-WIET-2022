@@ -1,0 +1,13 @@
+int a = 12
+int b = 13
+if (a < b and !((a == b or a != b) and 12 < b)):
+int c = 12
+int d = 49
+end
+elif (12 > b):
+int c = 14
+int d = 0
+end
+else:
+int c = 4
+end
