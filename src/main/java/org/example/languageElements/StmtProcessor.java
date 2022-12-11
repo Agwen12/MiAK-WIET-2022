@@ -63,6 +63,18 @@ public class StmtProcessor {
             int left = getEval(div.left);
             int right = getEval(div.right);
             res = left / right;
+        } else if (stmt instanceof ExprParenLog paren) {
+            res = getEval(paren.inner);
+        } else if (stmt instanceof Not not) {
+            res = (getEval(not.inner) == 1) ? 0 : 1;
+        } else if (stmt instanceof And and) {
+            int left = getEval(and.left);
+            int right = getEval(and.right);
+            res = (left + right) == 2 ? 1 : 0;
+        } else if (stmt instanceof Or or) {
+            int left = getEval(or.left);
+            int right = getEval(or.right);
+            res = (left + right) > 0 ? 1 : 0;
         } else if (stmt instanceof ExprParen paren) {
             res = getEval(paren.inner);
         } else if (stmt instanceof Gt gt) {

@@ -141,11 +141,6 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         return new Neq(left, right);
     }
 
-//    @Override
-//    public Stmt visitExpression(Python3Parser.ExpressionContext ctx) {
-//        return super.visitExpression(ctx);
-//    }
-
     @Override
     public Stmt visitFloatNumber(Python3Parser.FloatNumberContext ctx) {
         return super.visitFloatNumber(ctx);
@@ -157,6 +152,32 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         Stmt right = visit(ctx.getChild(2));
 
         return new Division(left, right);
+    }
+
+    @Override
+    public Stmt visitNot(Python3Parser.NotContext ctx) {
+        return new Not(visit(ctx.getChild(2)));
+    }
+
+    @Override
+    public Stmt visitOr(Python3Parser.OrContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+
+        return new Or(left, right);
+    }
+
+    @Override
+    public Stmt visitAnd(Python3Parser.AndContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+
+        return new And(left, right);
+    }
+
+    @Override
+    public Stmt visitExprParenLog(Python3Parser.ExprParenLogContext ctx) {
+        return new ExprParenLog(visit(ctx.getChild(1)));
     }
 
     @Override

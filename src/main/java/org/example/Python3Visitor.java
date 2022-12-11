@@ -110,19 +110,26 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBoolean(Python3Parser.BooleanContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Gt}
+	 * Visit a parse tree produced by the {@code Not}
 	 * labeled alternative in {@link Python3Parser#logical_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitGt(Python3Parser.GtContext ctx);
+	T visitNot(Python3Parser.NotContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Lt}
+	 * Visit a parse tree produced by the {@code Or}
 	 * labeled alternative in {@link Python3Parser#logical_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLt(Python3Parser.LtContext ctx);
+	T visitOr(Python3Parser.OrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code And}
+	 * labeled alternative in {@link Python3Parser#logical_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnd(Python3Parser.AndContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Get}
 	 * labeled alternative in {@link Python3Parser#logical_expr}.
@@ -131,12 +138,33 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGet(Python3Parser.GetContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Lt}
+	 * labeled alternative in {@link Python3Parser#logical_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLt(Python3Parser.LtContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprParenLog}
+	 * labeled alternative in {@link Python3Parser#logical_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprParenLog(Python3Parser.ExprParenLogContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Let}
 	 * labeled alternative in {@link Python3Parser#logical_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitLet(Python3Parser.LetContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Neq}
+	 * labeled alternative in {@link Python3Parser#logical_expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeq(Python3Parser.NeqContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Eq}
 	 * labeled alternative in {@link Python3Parser#logical_expr}.
@@ -145,10 +173,10 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEq(Python3Parser.EqContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Neq}
+	 * Visit a parse tree produced by the {@code Gt}
 	 * labeled alternative in {@link Python3Parser#logical_expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitNeq(Python3Parser.NeqContext ctx);
+	T visitGt(Python3Parser.GtContext ctx);
 }

@@ -1,10 +1,10 @@
 package org.example.languageElements;
 
-public class ExprParen extends Stmt {
+public class ExprParenLog extends Stmt {
 
     Stmt inner;
 
-    public ExprParen(Stmt inner) {
+    public ExprParenLog(Stmt inner) {
         this.inner = inner;
     }
 

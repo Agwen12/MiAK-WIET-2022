@@ -1,0 +1,6 @@
+int a = 12
+int b = 13
+a == b and a != b
+!(a == b and a != b)
+a == b or a != b
+!(a == b or a != b)
