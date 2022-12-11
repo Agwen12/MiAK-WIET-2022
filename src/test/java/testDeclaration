@@ -1,3 +1,4 @@
 int a = 3
+int j = 1
 j
 int b = 3 * 2 + a

@@ -4,12 +4,19 @@ import org.antlr.v4.runtime.Token;
 import org.example.Python3BaseVisitor;
 import org.example.Python3Parser;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
 
-    private List<String> vars;
-    private List<String> semanticErrors;
+    private final List<String> vars;
+    private final List<String> semanticErrors;
+
+    public AntlrToStmt(List<String> semanticErrors) {
+        this.vars = new LinkedList<>();
+        this.semanticErrors = semanticErrors;
+    }
 
     @Override
     public Stmt visitStmt(Python3Parser.StmtContext ctx) {
@@ -20,7 +27,7 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
     public Stmt visitAssignment(Python3Parser.AssignmentContext ctx) {
         String type = ctx.getChild(0).getText();
         Token nameToken = ctx.NAME().getSymbol();
-        int line = nameToken.getLine() + 1;
+        int line = nameToken.getLine();
         int col = nameToken.getCharPositionInLine() + 1;
         String name = ctx.getChild(1).getText();
         if (vars.contains(name)) {
@@ -58,7 +65,17 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
 
     @Override
     public Stmt visitVariable(Python3Parser.VariableContext ctx) {
-        return new Variable(ctx.getChild(0).getText());
+        String name = ctx.getChild(0).getText();
+        Token nameToken = ctx.NAME().getSymbol();
+        int line = nameToken.getLine();
+        int col = nameToken.getCharPositionInLine() + 1;
+        if (!vars.contains(name)) {
+            semanticErrors.add("Error: variable " + name +
+                    " is not declared ( line: " + line +
+                    " col: " + col + ")");
+        }
+
+        return new Variable(name);
     }
 
     @Override
@@ -88,7 +105,10 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
 
     @Override
     public Stmt visitDivision(Python3Parser.DivisionContext ctx) {
-        return super.visitDivision(ctx);
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+
+        return new Division(left, right);
     }
 
     @Override
