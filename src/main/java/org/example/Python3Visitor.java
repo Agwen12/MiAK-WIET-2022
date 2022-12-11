@@ -1,7 +1,6 @@
 // Generated from java-escape by ANTLR 4.11.1
-package org.example;
                                                      //*** https://github.com/antlr/antlr4/blob/master/doc/grammars.md#actions-at-the-grammar-level
-
+package org.example;
 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -14,17 +13,12 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#single_input}.
+	 * Visit a parse tree produced by the {@code FileInput}
+	 * labeled alternative in {@link Python3Parser#file_input}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSingle_input(Python3Parser.Single_inputContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#file_input}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFile_input(Python3Parser.File_inputContext ctx);
+	T visitFileInput(Python3Parser.FileInputContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Python3Parser#stmt}.
 	 * @param ctx the parse tree
@@ -32,123 +26,87 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStmt(Python3Parser.StmtContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#simple_stmt}.
+	 * Visit a parse tree produced by the {@code Assignment}
+	 * labeled alternative in {@link Python3Parser#assignment_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSimple_stmt(Python3Parser.Simple_stmtContext ctx);
+	T visitAssignment(Python3Parser.AssignmentContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#small_stmt}.
+	 * Visit a parse tree produced by the {@code AssignmentString}
+	 * labeled alternative in {@link Python3Parser#assignment_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSmall_stmt(Python3Parser.Small_stmtContext ctx);
+	T visitAssignmentString(Python3Parser.AssignmentStringContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#assignment_stmt}.
+	 * Visit a parse tree produced by the {@code Print}
+	 * labeled alternative in {@link Python3Parser#print_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAssignment_stmt(Python3Parser.Assignment_stmtContext ctx);
+	T visitPrint(Python3Parser.PrintContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#declaration}.
+	 * Visit a parse tree produced by the {@code Multiplication}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaration(Python3Parser.DeclarationContext ctx);
+	T visitMultiplication(Python3Parser.MultiplicationContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#flow_stmt}.
+	 * Visit a parse tree produced by the {@code Addition}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFlow_stmt(Python3Parser.Flow_stmtContext ctx);
+	T visitAddition(Python3Parser.AdditionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#break_stmt}.
+	 * Visit a parse tree produced by the {@code ExprParen}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBreak_stmt(Python3Parser.Break_stmtContext ctx);
+	T visitExprParen(Python3Parser.ExprParenContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#continue_stmt}.
+	 * Visit a parse tree produced by the {@code Variable}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitContinue_stmt(Python3Parser.Continue_stmtContext ctx);
+	T visitVariable(Python3Parser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#compound_stmt}.
+	 * Visit a parse tree produced by the {@code Subtraction}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCompound_stmt(Python3Parser.Compound_stmtContext ctx);
+	T visitSubtraction(Python3Parser.SubtractionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#if_stmt}.
+	 * Visit a parse tree produced by the {@code Number}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitIf_stmt(Python3Parser.If_stmtContext ctx);
+	T visitNumber(Python3Parser.NumberContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#while_stmt}.
+	 * Visit a parse tree produced by the {@code FloatNumber}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitWhile_stmt(Python3Parser.While_stmtContext ctx);
+	T visitFloatNumber(Python3Parser.FloatNumberContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#suite}.
+	 * Visit a parse tree produced by the {@code Division}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSuite(Python3Parser.SuiteContext ctx);
+	T visitDivision(Python3Parser.DivisionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Python3Parser#cond_expression}.
+	 * Visit a parse tree produced by the {@code Boolean}
+	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCond_expression(Python3Parser.Cond_expressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#multiplicativeExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMultiplicativeExpression(Python3Parser.MultiplicativeExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#additiveExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAdditiveExpression(Python3Parser.AdditiveExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#relationalExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRelationalExpression(Python3Parser.RelationalExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#equalityExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitEqualityExpression(Python3Parser.EqualityExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#logicalAndExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogicalAndExpression(Python3Parser.LogicalAndExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#logicalOrExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLogicalOrExpression(Python3Parser.LogicalOrExpressionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#print_stmt}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrint_stmt(Python3Parser.Print_stmtContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Python3Parser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpr(Python3Parser.ExprContext ctx);
+	T visitBoolean(Python3Parser.BooleanContext ctx);
 }

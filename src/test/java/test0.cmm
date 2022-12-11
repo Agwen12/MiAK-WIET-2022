@@ -1,0 +1,8 @@
+int i = 10
+int j = 3
+i
+j
+int c = i + j
+int d = i * j
+int e = i + j * 3
+int f = i * j + 3
