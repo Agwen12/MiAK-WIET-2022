@@ -1,5 +1,7 @@
 package org.example.languageElements;
 
+import org.example.languageElements.comparisons.*;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,6 +65,30 @@ public class StmtProcessor {
             res = left / right;
         } else if (stmt instanceof ExprParen paren) {
             res = getEval(paren.inner);
+        } else if (stmt instanceof Gt gt) {
+            int left = getEval(gt.left);
+            int right = getEval(gt.right);
+            res = left > right ? 1 : 0;
+        } else if (stmt instanceof Lt lt) {
+            int left = getEval(lt.left);
+            int right = getEval(lt.right);
+            res = left < right ? 1 : 0;
+        } else if (stmt instanceof Let let) {
+            int left = getEval(let.left);
+            int right = getEval(let.right);
+            res = left <= right ? 1 : 0;
+        } else if (stmt instanceof Get get) {
+            int left = getEval(get.left);
+            int right = getEval(get.right);
+            res = left >= right ? 1 : 0;
+        } else if (stmt instanceof Eq eq) {
+            int left = getEval(eq.left);
+            int right = getEval(eq.right);
+            res = left == right ? 1 : 0;
+        } else if (stmt instanceof Neq neq) {
+            int left = getEval(neq.left);
+            int right = getEval(neq.right);
+            res = left != right ? 1 : 0;
         }
 
         return res;

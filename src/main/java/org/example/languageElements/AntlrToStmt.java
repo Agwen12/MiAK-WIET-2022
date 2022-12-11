@@ -3,6 +3,7 @@ package org.example.languageElements;
 import org.antlr.v4.runtime.Token;
 import org.example.Python3BaseVisitor;
 import org.example.Python3Parser;
+import org.example.languageElements.comparisons.*;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -98,7 +99,49 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         return new ExprParen(visit(ctx.getChild(1)));
     }
 
-    //    @Override
+    @Override
+    public Stmt visitGt(Python3Parser.GtContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+        return new Gt(left, right);
+    }
+
+    @Override
+    public Stmt visitLt(Python3Parser.LtContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+        return new Lt(left, right);
+    }
+
+    @Override
+    public Stmt visitGet(Python3Parser.GetContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+        return new Get(left, right);
+    }
+
+    @Override
+    public Stmt visitLet(Python3Parser.LetContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+        return new Let(left, right);
+    }
+
+    @Override
+    public Stmt visitEq(Python3Parser.EqContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+        return new Eq(left, right);
+    }
+
+    @Override
+    public Stmt visitNeq(Python3Parser.NeqContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+        return new Neq(left, right);
+    }
+
+//    @Override
 //    public Stmt visitExpression(Python3Parser.ExpressionContext ctx) {
 //        return super.visitExpression(ctx);
 //    }
