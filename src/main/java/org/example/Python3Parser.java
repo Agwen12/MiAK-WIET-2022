@@ -427,6 +427,20 @@ public class Python3Parser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class ExprParenContext extends ExprContext {
+		public TerminalNode OPEN_PAREN() { return getToken(Python3Parser.OPEN_PAREN, 0); }
+		public ExprContext expr() {
+			return getRuleContext(ExprContext.class,0);
+		}
+		public TerminalNode CLOSE_PAREN() { return getToken(Python3Parser.CLOSE_PAREN, 0); }
+		public ExprParenContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitExprParen(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class VariableContext extends ExprContext {
 		public TerminalNode NAME() { return getToken(Python3Parser.NAME, 0); }
 		public VariableContext(ExprContext ctx) { copyFrom(ctx); }
@@ -459,20 +473,6 @@ public class Python3Parser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitNumber(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
-	public static class ExpressionContext extends ExprContext {
-		public TerminalNode OPEN_PAREN() { return getToken(Python3Parser.OPEN_PAREN, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode CLOSE_PAREN() { return getToken(Python3Parser.CLOSE_PAREN, 0); }
-		public ExpressionContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof Python3Visitor ) return ((Python3Visitor<? extends T>)visitor).visitExpression(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -531,13 +531,26 @@ public class Python3Parser extends Parser {
 			setState(42);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
+			case OPEN_PAREN:
+				{
+				_localctx = new ExprParenContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
+				setState(34);
+				match(OPEN_PAREN);
+				setState(35);
+				expr(0);
+				setState(36);
+				match(CLOSE_PAREN);
+				}
+				break;
 			case NAME:
 				{
 				_localctx = new VariableContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-
-				setState(34);
+				setState(38);
 				match(NAME);
 				}
 				break;
@@ -546,7 +559,7 @@ public class Python3Parser extends Parser {
 				_localctx = new NumberContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(35);
+				setState(39);
 				match(NUMBER);
 				}
 				break;
@@ -555,7 +568,7 @@ public class Python3Parser extends Parser {
 				_localctx = new FloatNumberContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(36);
+				setState(40);
 				match(FLOAT_NUMBER);
 				}
 				break;
@@ -564,21 +577,8 @@ public class Python3Parser extends Parser {
 				_localctx = new BooleanContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(37);
+				setState(41);
 				match(BOOLEAN);
-				}
-				break;
-			case OPEN_PAREN:
-				{
-				_localctx = new ExpressionContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(38);
-				match(OPEN_PAREN);
-				setState(39);
-				expr(0);
-				setState(40);
-				match(CLOSE_PAREN);
 				}
 				break;
 			default:
@@ -601,11 +601,11 @@ public class Python3Parser extends Parser {
 						_localctx = new MultiplicationContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(44);
-						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(45);
 						match(MUL);
 						setState(46);
-						expr(10);
+						expr(9);
 						}
 						break;
 					case 2:
@@ -613,11 +613,11 @@ public class Python3Parser extends Parser {
 						_localctx = new DivisionContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(47);
-						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(48);
 						match(DIV);
 						setState(49);
-						expr(9);
+						expr(8);
 						}
 						break;
 					case 3:
@@ -625,11 +625,11 @@ public class Python3Parser extends Parser {
 						_localctx = new AdditionContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(50);
-						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
 						setState(51);
 						match(ADD);
 						setState(52);
-						expr(8);
+						expr(7);
 						}
 						break;
 					case 4:
@@ -637,11 +637,11 @@ public class Python3Parser extends Parser {
 						_localctx = new SubtractionContext(new ExprContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expr);
 						setState(53);
-						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(54);
 						match(SUB);
 						setState(55);
-						expr(7);
+						expr(6);
 						}
 						break;
 					}
@@ -674,13 +674,13 @@ public class Python3Parser extends Parser {
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 9);
-		case 1:
 			return precpred(_ctx, 8);
-		case 2:
+		case 1:
 			return precpred(_ctx, 7);
-		case 3:
+		case 2:
 			return precpred(_ctx, 6);
+		case 3:
+			return precpred(_ctx, 5);
 		}
 		return true;
 	}
@@ -712,19 +712,19 @@ public class Python3Parser extends Parser {
 		"\u0005\u0001\u0000\u0000\u0000\u001c\u001f\u0005\u0014\u0000\u0000\u001d"+
 		" \u0005\u0016\u0000\u0000\u001e \u0003\b\u0004\u0000\u001f\u001d\u0001"+
 		"\u0000\u0000\u0000\u001f\u001e\u0001\u0000\u0000\u0000 \u0007\u0001\u0000"+
-		"\u0000\u0000!\"\u0006\u0004\uffff\uffff\u0000\"+\u0005\u001f\u0000\u0000"+
-		"#+\u0005\u0017\u0000\u0000$+\u0005\"\u0000\u0000%+\u0005\u0019\u0000\u0000"+
-		"&\'\u0005#\u0000\u0000\'(\u0003\b\u0004\u0000()\u0005$\u0000\u0000)+\u0001"+
-		"\u0000\u0000\u0000*!\u0001\u0000\u0000\u0000*#\u0001\u0000\u0000\u0000"+
-		"*$\u0001\u0000\u0000\u0000*%\u0001\u0000\u0000\u0000*&\u0001\u0000\u0000"+
-		"\u0000+:\u0001\u0000\u0000\u0000,-\n\t\u0000\u0000-.\u0005\t\u0000\u0000"+
-		".9\u0003\b\u0004\n/0\n\b\u0000\u000001\u0005\n\u0000\u000019\u0003\b\u0004"+
-		"\t23\n\u0007\u0000\u000034\u0005\f\u0000\u000049\u0003\b\u0004\b56\n\u0006"+
-		"\u0000\u000067\u0005\r\u0000\u000079\u0003\b\u0004\u00078,\u0001\u0000"+
-		"\u0000\u00008/\u0001\u0000\u0000\u000082\u0001\u0000\u0000\u000085\u0001"+
-		"\u0000\u0000\u00009<\u0001\u0000\u0000\u0000:8\u0001\u0000\u0000\u0000"+
-		":;\u0001\u0000\u0000\u0000;\t\u0001\u0000\u0000\u0000<:\u0001\u0000\u0000"+
-		"\u0000\u0007\f\u000e\u0015\u001f*8:";
+		"\u0000\u0000!\"\u0006\u0004\uffff\uffff\u0000\"#\u0005#\u0000\u0000#$"+
+		"\u0003\b\u0004\u0000$%\u0005$\u0000\u0000%+\u0001\u0000\u0000\u0000&+"+
+		"\u0005\u001f\u0000\u0000\'+\u0005\u0017\u0000\u0000(+\u0005\"\u0000\u0000"+
+		")+\u0005\u0019\u0000\u0000*!\u0001\u0000\u0000\u0000*&\u0001\u0000\u0000"+
+		"\u0000*\'\u0001\u0000\u0000\u0000*(\u0001\u0000\u0000\u0000*)\u0001\u0000"+
+		"\u0000\u0000+:\u0001\u0000\u0000\u0000,-\n\b\u0000\u0000-.\u0005\t\u0000"+
+		"\u0000.9\u0003\b\u0004\t/0\n\u0007\u0000\u000001\u0005\n\u0000\u00001"+
+		"9\u0003\b\u0004\b23\n\u0006\u0000\u000034\u0005\f\u0000\u000049\u0003"+
+		"\b\u0004\u000756\n\u0005\u0000\u000067\u0005\r\u0000\u000079\u0003\b\u0004"+
+		"\u00068,\u0001\u0000\u0000\u00008/\u0001\u0000\u0000\u000082\u0001\u0000"+
+		"\u0000\u000085\u0001\u0000\u0000\u00009<\u0001\u0000\u0000\u0000:8\u0001"+
+		"\u0000\u0000\u0000:;\u0001\u0000\u0000\u0000;\t\u0001\u0000\u0000\u0000"+
+		"<:\u0001\u0000\u0000\u0000\u0007\f\u000e\u0015\u001f*8:";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

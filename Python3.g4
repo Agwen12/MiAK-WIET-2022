@@ -80,7 +80,8 @@ assignment_stmt: TYPE NAME '=' expr # Assignment
 print_stmt: 'print' (STRING | expr) # Print
           ;
 
-expr: expr MUL expr # Multiplication
+expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
+    | expr MUL expr # Multiplication
     | expr DIV expr # Division
     | expr ADD expr # Addition
     | expr SUB expr # Subtraction
@@ -88,7 +89,6 @@ expr: expr MUL expr # Multiplication
     | NUMBER        # Number
     | FLOAT_NUMBER  # FloatNumber
     | BOOLEAN       # Boolean
-    | OPEN_PAREN expr CLOSE_PAREN # Expression
     ;
 
 //compound_stmt: if_stmt | while_stmt;

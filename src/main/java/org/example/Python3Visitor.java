@@ -54,6 +54,13 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAddition(Python3Parser.AdditionContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ExprParen}
+	 * labeled alternative in {@link Python3Parser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprParen(Python3Parser.ExprParenContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link Python3Parser#expr}.
 	 * @param ctx the parse tree
@@ -74,13 +81,6 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNumber(Python3Parser.NumberContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code Expression}
-	 * labeled alternative in {@link Python3Parser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpression(Python3Parser.ExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code FloatNumber}
 	 * labeled alternative in {@link Python3Parser#expr}.
