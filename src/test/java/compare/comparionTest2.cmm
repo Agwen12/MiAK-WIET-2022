@@ -1,0 +1,11 @@
+
+int a = 1
+int b = 4
+int c = 5
+int d = 10
+
+a + b == c
+a + b > d
+a + c > c
+d < c + (a + b) + 1
+d * b >= b * c * 10 + 2

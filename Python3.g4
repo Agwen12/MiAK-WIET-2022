@@ -56,6 +56,7 @@ file_input: (NEWLINE | stmt)* EOF #FileInput
 
 stmt: assignment_stmt
     | expr
+    | logical_expr
 //    | compound_stmt #CompuntStmt
     ;
 
@@ -91,6 +92,15 @@ expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
     | FLOAT_NUMBER  # FloatNumber
     | BOOLEAN       # Boolean
     ;
+
+
+logical_expr: expr '>' expr   # Gt
+            | expr '<' expr   # Lt
+            | expr '>=' expr  # Get
+            | expr '<=' expr  # Let
+            | expr '==' expr  # Eq
+            | expr '!=' expr  # Neq
+            ;
 
 //compound_stmt: if_stmt | while_stmt;
 //if_stmt: 'if' OPEN_PAREN cond_expression CLOSE_PAREN ':' suite ('elif' OPEN_PAREN cond_expression CLOSE_PAREN ':' suite)* ('else'  ':' suite)? END;
