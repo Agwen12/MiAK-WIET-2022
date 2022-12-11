@@ -10,6 +10,7 @@ public class StmtProcessor {
     // TODO mapa z mapami do typów
     public Map<String, Integer> values; //symbol table used for storing values for variables
 
+
     public StmtProcessor(List<Stmt> stmtList) {
         this.stmtList = stmtList;
         this.values = new HashMap<>();
@@ -52,6 +53,16 @@ public class StmtProcessor {
             int left = getEval(mul.left);
             int right = getEval(mul.right);
             res = left * right;
+        } else if (stmt instanceof Subtraction sub) {
+            int left = getEval(sub.left);
+            int right = getEval(sub.right);
+            res = left - right;
+        } else if (stmt instanceof Division div) {
+            int left = getEval(div.left);
+            int right = getEval(div.right);
+            res = left / right;
+        } else if (stmt instanceof ExprParen paren) {
+            res = getEval(paren.inner);
         }
 
         return res;

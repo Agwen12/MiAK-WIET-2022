@@ -33,6 +33,13 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssignment(Python3Parser.AssignmentContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code AssignmentString}
+	 * labeled alternative in {@link Python3Parser#assignment_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignmentString(Python3Parser.AssignmentStringContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Print}
 	 * labeled alternative in {@link Python3Parser#print_stmt}.
 	 * @param ctx the parse tree

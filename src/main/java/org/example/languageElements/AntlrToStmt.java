@@ -94,9 +94,14 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
     }
 
     @Override
-    public Stmt visitExpression(Python3Parser.ExpressionContext ctx) {
-        return super.visitExpression(ctx);
+    public Stmt visitExprParen(Python3Parser.ExprParenContext ctx) {
+        return new ExprParen(visit(ctx.getChild(1)));
     }
+
+    //    @Override
+//    public Stmt visitExpression(Python3Parser.ExpressionContext ctx) {
+//        return super.visitExpression(ctx);
+//    }
 
     @Override
     public Stmt visitFloatNumber(Python3Parser.FloatNumberContext ctx) {

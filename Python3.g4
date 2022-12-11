@@ -66,6 +66,7 @@ stmt: assignment_stmt
 //          ;
 
 assignment_stmt: TYPE NAME '=' expr # Assignment
+               | 'string' NAME '=' STRING # AssignmentString
                ;
 //flow_stmt: break_stmt
 //         | continue_stmt

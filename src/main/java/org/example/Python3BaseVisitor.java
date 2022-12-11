@@ -41,6 +41,13 @@ public class Python3BaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitAssignmentString(Python3Parser.AssignmentStringContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitPrint(Python3Parser.PrintContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
