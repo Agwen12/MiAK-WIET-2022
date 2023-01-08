@@ -122,12 +122,12 @@ block: COLON NEWLINE (stmt NEWLINE)* END NEWLINE?
  * lexer rules
  */
 
+//todo:castowanie
+
 TYPE
  : 'string'
  | 'int'
- | 'long'
  | 'float'
- | 'double'
  | 'boolean'
  ;
 

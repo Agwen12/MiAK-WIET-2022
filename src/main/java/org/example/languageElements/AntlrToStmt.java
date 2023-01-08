@@ -196,27 +196,37 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         return new Number(num);
     }
 
-    @Override
-    public Stmt visitCondition(Python3Parser.ConditionContext ctx) {
-        List<Python3Parser.Condition_blockContext> conditions =  ctx.condition_block();
-
-        boolean evaluatedBlock = false;
-
-        for(Python3Parser.Condition_blockContext condition : conditions) {
-
-            Stmt evaluated = this.visit(condition.logical_expr());
-
-            if(evaluated) {
-                evaluatedBlock = true;
-                this.visit(condition.block());
-                break;
-            }
-        }
-
-        if(!evaluatedBlock && ctx.block() != null) {
-            this.visit(ctx.block());
-        }
-
-        return new Void();
-    }
+//    @Override
+//    public Stmt visitCondition(Python3Parser.ConditionContext ctx) {
+//        List<Python3Parser.Condition_blockContext> conditions =  ctx.condition_block();
+//
+//        boolean evaluatedBlock = false;
+//
+//        for(Python3Parser.Condition_blockContext condition : conditions) {
+//
+//            Stmt evaluated = this.visit(condition.logical_expr());
+//
+//            if(evaluated) {
+//                evaluatedBlock = true;
+//                this.visit(condition.block());
+//                break;
+//            }
+//        }
+//
+//        if(!evaluatedBlock && ctx.block() != null) {
+//            this.visit(ctx.block());
+//        }
+//
+//        return new Void();
+//    }
+//
+//    @Override
+//    public Stmt visitCondition_block(Python3Parser.Condition_blockContext ctx) {
+//
+//    }
+//
+//    @Override
+//    public Stmt  visitBlock(Python3Parser.BlockContext ctx) {
+//
+//    }
 }
