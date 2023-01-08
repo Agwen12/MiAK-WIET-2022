@@ -141,14 +141,11 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         return new Neq(left, right);
     }
 
-//    @Override
-//    public Stmt visitExpression(Python3Parser.ExpressionContext ctx) {
-//        return super.visitExpression(ctx);
-//    }
-
     @Override
     public Stmt visitFloatNumber(Python3Parser.FloatNumberContext ctx) {
-        return super.visitFloatNumber(ctx);
+        String numText = ctx.getChild(0).getText();
+        float num = Float.parseFloat(numText);
+        return new FloatNumber(num);
     }
 
     @Override
@@ -160,7 +157,76 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
     }
 
     @Override
-    public Stmt visitBoolean(Python3Parser.BooleanContext ctx) {
-        return super.visitBoolean(ctx);
+    public Stmt visitNot(Python3Parser.NotContext ctx) {
+        return new Not(visit(ctx.getChild(2)));
     }
+
+    @Override
+    public Stmt visitOr(Python3Parser.OrContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+
+        return new Or(left, right);
+    }
+
+    @Override
+    public Stmt visitAnd(Python3Parser.AndContext ctx) {
+        Stmt left = visit(ctx.getChild(0));
+        Stmt right = visit(ctx.getChild(2));
+
+        return new And(left, right);
+    }
+
+    @Override
+    public Stmt visitExprParenLog(Python3Parser.ExprParenLogContext ctx) {
+        return new ExprParenLog(visit(ctx.getChild(1)));
+    }
+
+    @Override
+    public Stmt visitBool(Python3Parser.BoolContext ctx)  {
+        String numText = ctx.getChild(0).getText();
+        int num = Integer.parseInt(numText);
+        return new Number(num);
+    }
+
+    @Override
+    public Stmt visitStringWord(Python3Parser.StringWordContext ctx) {
+        String numText = ctx.getChild(0).getText();
+        int num = Integer.parseInt(numText);
+        return new Number(num);
+    }
+
+//    @Override
+//    public Stmt visitCondition(Python3Parser.ConditionContext ctx) {
+//        List<Python3Parser.Condition_blockContext> conditions =  ctx.condition_block();
+//
+//        boolean evaluatedBlock = false;
+//
+//        for(Python3Parser.Condition_blockContext condition : conditions) {
+//
+//            Stmt evaluated = this.visit(condition.logical_expr());
+//
+//            if(evaluated) {
+//                evaluatedBlock = true;
+//                this.visit(condition.block());
+//                break;
+//            }
+//        }
+//
+//        if(!evaluatedBlock && ctx.block() != null) {
+//            this.visit(ctx.block());
+//        }
+//
+//        return new Void();
+//    }
+//
+//    @Override
+//    public Stmt visitCondition_block(Python3Parser.Condition_blockContext ctx) {
+//
+//    }
+//
+//    @Override
+//    public Stmt  visitBlock(Python3Parser.BlockContext ctx) {
+//
+//    }
 }

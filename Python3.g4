@@ -50,6 +50,9 @@ GE : '>=' ;
 EQUAL_EQUAL : '==' ;
 NOT_EQUAL : '!=' ;
 PRINT : 'print' ;
+NOT : '!';
+AND : 'and';
+OR : 'or';
 
 file_input: (NEWLINE | stmt)* EOF #FileInput
           ;
@@ -57,7 +60,8 @@ file_input: (NEWLINE | stmt)* EOF #FileInput
 stmt: assignment_stmt
     | expr
     | logical_expr
-//    | compound_stmt #CompuntStmt
+    | condition
+    | print_stmt
     ;
 
 //small_stmt: assignment_stmt # Assignment
@@ -67,7 +71,6 @@ stmt: assignment_stmt
 //          ;
 
 assignment_stmt: TYPE NAME '=' expr # Assignment
-               | 'string' NAME '=' STRING # AssignmentString
                ;
 //flow_stmt: break_stmt
 //         | continue_stmt
@@ -79,7 +82,7 @@ assignment_stmt: TYPE NAME '=' expr # Assignment
 //continue_stmt: 'continue'
 //             ;
 
-print_stmt: 'print' (STRING | expr) # Print
+print_stmt: PRINT (STRING | expr) # Print
           ;
 
 expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
@@ -90,69 +93,41 @@ expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
     | NAME          # Variable
     | NUMBER        # Number
     | FLOAT_NUMBER  # FloatNumber
-    | BOOLEAN       # Boolean
+    | BOOLEAN       # Bool
+    | STRING        # StringWord
     ;
 
-
-logical_expr: expr '>' expr   # Gt
-            | expr '<' expr   # Lt
-            | expr '>=' expr  # Get
-            | expr '<=' expr  # Let
-            | expr '==' expr  # Eq
-            | expr '!=' expr  # Neq
+logical_expr: NOT OPEN_PAREN logical_expr CLOSE_PAREN  # Not
+            | OPEN_PAREN logical_expr CLOSE_PAREN # ExprParenLog
+            | logical_expr AND logical_expr # And
+            | logical_expr OR logical_expr # Or
+            | expr GT expr   # Gt
+            | expr LT expr   # Lt
+            | expr GE expr  # Get
+            | expr LE expr  # Let
+            | expr EQUAL_EQUAL expr  # Eq
+            | expr NOT_EQUAL expr  # Neq
             ;
 
-//compound_stmt: if_stmt | while_stmt;
-//if_stmt: 'if' OPEN_PAREN cond_expression CLOSE_PAREN ':' suite ('elif' OPEN_PAREN cond_expression CLOSE_PAREN ':' suite)* ('else'  ':' suite)? END;
-//while_stmt: 'while' OPEN_PAREN cond_expression CLOSE_PAREN ':' suite END;
-//suite:  NEWLINE stmt+;
+condition: IF condition_block (ELIF condition_block)* (ELSE block)?
+         ;
 
-//cond_expression: logicalOrExpression;
-//
-//multiplicativeExpression
-// :   expr (('*'|'/'|'%') expr)*
-// ;
-//
-//additiveExpression
-// :   multiplicativeExpression (('+'|'-') multiplicativeExpression)*
-// ;
-//relationalExpression
-// :   additiveExpression (('<'|'>'|'<='|'>=') additiveExpression)*
-// |   NOT OPEN_PAREN  additiveExpression (('<'|'>'|'<='|'>=') additiveExpression)* CLOSE_PAREN
-// ;
-//
-//equalityExpression
-// :  relationalExpression (('=='| '!=') relationalExpression)*
-// |  NOT OPEN_PAREN relationalExpression (('=='| '!=') relationalExpression)* CLOSE_PAREN
-// ;
-//
-//logicalAndExpression
-// :  equalityExpression (AND equalityExpression)*
-// |  NOT OPEN_PAREN  equalityExpression (AND  equalityExpression)* CLOSE_PAREN
-// ;
-//
-//logicalOrExpression
-// :   logicalAndExpression ( OR logicalAndExpression)*
-// |   NOT OPEN_PAREN logicalAndExpression ( OR logicalAndExpression)* CLOSE_PAREN
-// ;
+condition_block: OPEN_PAREN logical_expr CLOSE_PAREN block
+               ;
 
-//  ( type ) expr
-//castExpression
-// :  OPEN_PAREN TYPE CLOSE_PAREN expr
-// ;
-
-
+block: COLON NEWLINE (stmt NEWLINE)* END NEWLINE?
+     ;
 
 /*
  * lexer rules
  */
 
+//todo:castowanie
+
 TYPE
  : 'string'
  | 'int'
- | 'long'
  | 'float'
- | 'double'
  | 'boolean'
  ;
 
@@ -169,8 +144,8 @@ INTEGER
  ;
 
 BOOLEAN
- : 'Yass'
- | 'Nyet'
+ : 'true'
+ | 'false'
  ;
 
 NEWLINE
@@ -179,23 +154,6 @@ NEWLINE
 
 END
  : 'end'
- ;
-//
-//LOGICAL_OP
-// : 'and'
-// | 'or'
-// ;
-
-AND
- : 'and'
- ;
-
-OR
- : 'or'
- ;
-
-NOT
- : '!'
  ;
 
 NAME
