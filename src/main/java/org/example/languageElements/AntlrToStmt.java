@@ -185,15 +185,14 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
     @Override
     public Stmt visitBool(Python3Parser.BoolContext ctx)  {
         String numText = ctx.getChild(0).getText();
-        int num = Integer.parseInt(numText);
+        int num = "true".equals(numText) ? 1 : 0;
         return new Number(num);
     }
 
     @Override
     public Stmt visitStringWord(Python3Parser.StringWordContext ctx) {
         String numText = ctx.getChild(0).getText();
-        int num = Integer.parseInt(numText);
-        return new Number(num);
+        return new Striing(numText);
     }
 
 //    @Override
