@@ -197,4 +197,10 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBlock(Python3Parser.BlockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Python3Parser#scope_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitScope_block(Python3Parser.Scope_blockContext ctx);
 }

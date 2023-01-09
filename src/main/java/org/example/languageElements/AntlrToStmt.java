@@ -228,4 +228,18 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
 //    public Stmt  visitBlock(Python3Parser.BlockContext ctx) {
 //
 //    }
+
+
+    @Override
+    public Stmt visitScope_block(Python3Parser.Scope_blockContext ctx) {
+        String name = ctx.getChild(0).getText();
+        name = name.substring(1, name.length() - 1);
+        List<Stmt> stmts = new LinkedList<>();
+
+        for (int j = 1; j < ctx.getChildCount() - 1; j++) {
+            stmts.add(visit(ctx.getChild(j)));
+        }
+
+        return new ScopeBlock(name, stmts);
+    }
 }

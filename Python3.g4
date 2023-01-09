@@ -62,13 +62,8 @@ stmt: assignment_stmt
     | logical_expr
     | condition
     | print_stmt
+    | scope_block
     ;
-
-//small_stmt: assignment_stmt # Assignment
-//          | flow_stmt #FlowStms
-//          | print_stmt #Print
-//          | expr #
-//          ;
 
 assignment_stmt: TYPE NAME '=' expr # Assignment
                ;
@@ -118,11 +113,16 @@ condition_block: OPEN_PAREN logical_expr CLOSE_PAREN block
 block: COLON NEWLINE (stmt NEWLINE)* END NEWLINE?
      ;
 
+scope_block: SCOPE_BLOCK_NAME (stmt NEWLINE | NEWLINE)* SCOPE_BLOCK_END;
+
 /*
  * lexer rules
  */
 
 //todo:castowanie
+
+SCOPE_BLOCK_NAME: '[' [A-Z]* ']' NEWLINE;
+SCOPE_BLOCK_END: '[' END ']' NEWLINE;
 
 TYPE
  : 'string'
