@@ -8,10 +8,12 @@ import org.example.languageElements.comparisons.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
 
     private final List<String> vars;
+
     private final List<String> semanticErrors;
 
     public AntlrToStmt(List<String> semanticErrors) {
@@ -31,12 +33,12 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         int line = nameToken.getLine();
         int col = nameToken.getCharPositionInLine() + 1;
         String name = ctx.getChild(1).getText();
-        if (vars.contains(name)) {
-            semanticErrors.add("Error variable " + name + "has already been" +
-                    " declared in line: " + line + "col: " + col);
-        } else {
+//        if (vars.contains(name)) {
+//            semanticErrors.add("Error variable " + name + " has already been" +
+//                    " declared in line: " + line + "col: " + col);
+//        } else {
             vars.add(name);
-        }
+//        }
 
 
         Stmt exp = visit(ctx.getChild(3));

@@ -1,5 +1,19 @@
 [MAIN]
 
+int a = 6
+
+[SUBMAIN]
+
 int a = 2
+a
+[end]
+
+[THESUBMAIN]
+
+float a = 3.
+a
+[end]
+
+a
 
 [end]

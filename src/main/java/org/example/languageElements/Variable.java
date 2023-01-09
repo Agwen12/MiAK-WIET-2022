@@ -14,6 +14,7 @@ public class Variable extends Stmt {
 
     @Override
     public String toString() {
-        return "(" + type + "): " + name;
+        if (type != null) return "(" + type + "): " + name;
+        return name;
     }
 }

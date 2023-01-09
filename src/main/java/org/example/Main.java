@@ -20,7 +20,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         try {
-            String source = "src/test/java/assignments/assignTypesExprTest";
+            String source = "src/test/java/scopes/scopeTest";
 
             Python3Parser parser = getParser(source);
             ParseTree antlrTree = parser.file_input();
@@ -35,7 +35,7 @@ public class Main {
                 }
             } else {
                 StmtProcessor sp = new StmtProcessor(file.stmts);
-                for (String ev : sp.getEvaluationResult()) {
+                for (String ev : sp.getEvaluationResult(file.stmts)) {
                     System.out.println(ev);
                 }
             }
