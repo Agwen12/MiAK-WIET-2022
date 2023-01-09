@@ -20,7 +20,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         try {
-            String source = "src/test/java/compare/logicalTest2.cmm";
+            String source = "src/test/java/assignments/assignTypesExprTest";
 
             Python3Parser parser = getParser(source);
             ParseTree antlrTree = parser.file_input();

@@ -1,0 +1,10 @@
+
+
+string c = "I'm a string"
+
+int a = 1
+float b = 1.2
+
+boolean d = true
+boolean e = false
+
