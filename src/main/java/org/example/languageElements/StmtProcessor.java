@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class StmtProcessor {
 
     public List<Stmt> stmtList;
-    public  Stack<VariableHolder> vars = new Stack<>();
+    public  LinkedList<VariableHolder> vars = new LinkedList<>();
 
     // TODO mapa z mapami do typów
     public Map<String, Integer> valuesInt; //symbol table used for storing values for variables
@@ -38,25 +38,25 @@ public class StmtProcessor {
                 switch (ass.type) {
                     case "int" -> {
                         if (res instanceof Integer) {
-                            vars.peek().valuesInt.put(ass.name, (Integer) res);
+                            vars.getLast().valuesInt.put(ass.name, (Integer) res);
                             success = true;
                         }
                     }
                     case "float" -> {
                         if (res instanceof Float) {
-                            vars.peek().valuesFloat.put(ass.name, (Float) res);
+                            vars.getLast().valuesFloat.put(ass.name, (Float) res);
                             success = true;
                         }
                     }
                     case "string" -> {
                         if (res instanceof String) {
-                            vars.peek().valuesString.put(ass.name, (String) res);
+                            vars.getLast().valuesString.put(ass.name, (String) res);
                             success = true;
                         }
                     }
                     case "boolean" -> {
                         if (res instanceof Integer) {
-                            vars.peek().valuesBoolean.put(ass.name, (Integer) res);
+                            vars.getLast().valuesBoolean.put(ass.name, (Integer) res);
                             success = true;
                         }
                     }
@@ -68,9 +68,9 @@ public class StmtProcessor {
                             "to value: " + ass.value);
                 }
             } else if (stmt instanceof ScopeBlock scopeBlock) {
-                vars.push(new VariableHolder());
+                vars.add(new VariableHolder());
                 evaluations.addAll(getEvaluationResult(scopeBlock.getStmts()));
-                vars.pop();
+                vars.removeLast();
             } else {
                 String input = stmt.toString();
                 var res = getEval(stmt);
@@ -82,18 +82,24 @@ public class StmtProcessor {
         return evaluations;
     }
 
-    // TODO reszta możliwości
-    // chłop mówił coś o tym że można to bez castów robić visitor patternem ale ja już nie kminię jak
+    // TODO reszta możliwości, re-assignment
+
 
     private Object getEval(Stmt stmt) {
         Object res = null;
         if (stmt instanceof Number num) {
             res = num.number;
         } else if (stmt instanceof Variable var) {
-            if (vars.peek().valuesInt.containsKey(var.name)) res = vars.peek().valuesInt.get(var.name);
-            if (vars.peek().valuesFloat.containsKey(var.name)) res = vars.peek().valuesFloat.get(var.name);
-            if (vars.peek().valuesString.containsKey(var.name)) res = vars.peek().valuesString.get(var.name);
-            if (vars.peek().valuesBoolean.containsKey(var.name)) res = vars.peek().valuesBoolean.get(var.name);
+            int idx = vars.size() - 1;
+            while (idx >= 0 && res == null) {
+                VariableHolder c = vars.get(idx);
+                if (c.valuesInt.containsKey(var.name)) res = c.valuesInt.get(var.name);
+                if (c.valuesFloat.containsKey(var.name)) res = c.valuesFloat.get(var.name);
+                if (c.valuesString.containsKey(var.name)) res = c.valuesString.get(var.name);
+                if (c.valuesBoolean.containsKey(var.name)) res = c.valuesBoolean.get(var.name);
+
+                idx--;
+            }
         } else if (stmt instanceof Addition add) {
             var left = getEval(add.left);
             var right = getEval(add.right);
@@ -102,7 +108,7 @@ public class StmtProcessor {
             } else if (left instanceof Integer && right instanceof Integer) {
                 res = (Integer) left + (Integer) right;
             } else {
-                throw new RuntimeException("Error while performing addition!");
+                throw new RuntimeException("Error while performing addition! Types dont match");
             }
 
         } else if (stmt instanceof Multiplication mul) {
@@ -113,7 +119,7 @@ public class StmtProcessor {
             } else if (left instanceof Integer && right instanceof Integer) {
                 res = (Integer) left * (Integer) right;
             } else {
-                throw new RuntimeException("Error while performing addition!");
+                throw new RuntimeException("Error while performing multiplication! Types dont match");
             }
 
         } else if (stmt instanceof Subtraction sub) {
@@ -124,7 +130,7 @@ public class StmtProcessor {
             } else if (left instanceof Integer && right instanceof Integer) {
                 res = (Integer) left - (Integer) right;
             } else {
-                throw new RuntimeException("Error while performing addition!");
+                throw new RuntimeException("Error while performing subtraction! Types dont match");
             }
         } else if (stmt instanceof Division div) {
             var left = getEval(div.left);
@@ -134,7 +140,7 @@ public class StmtProcessor {
             } else if (left instanceof Integer && right instanceof Integer) {
                 res = (Integer) left / (Integer) right;
             } else {
-                throw new RuntimeException("Error while performing addition!");
+                throw new RuntimeException("Error while performing division! Types dont match");
             }
         } else if (stmt instanceof ExprParenLog paren) {
             res = getEval(paren.inner);
@@ -212,7 +218,7 @@ public class StmtProcessor {
     }
 
     private boolean isDeclared(String name) {
-        VariableHolder holder = vars.peek();
+        VariableHolder holder = vars.getLast();
         return holder.valuesInt.containsKey(name) || holder.valuesFloat.containsKey(name)
                 || holder.valuesString.containsKey(name) || holder.valuesBoolean.containsKey(name);
     }

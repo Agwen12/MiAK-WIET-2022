@@ -1,19 +1,25 @@
-[MAIN]
+
 
 int a = 6
-
+int c = 2
 [SUBMAIN]
-
-int a = 2
-a
-[end]
-
-[THESUBMAIN]
-
-float a = 3.
-a
-[end]
-
-a
+    int a = 2
+    a
+    c
+        [SUBSUBMAIN]
+            string a = "Hello world!"
+            int c = 69
+            a
+            c
+        [end]
 
 [end]
+
+[ANOTHERSUBMAIN]
+    float a = 3.
+    a
+    c
+[end]
+
+a
+c
