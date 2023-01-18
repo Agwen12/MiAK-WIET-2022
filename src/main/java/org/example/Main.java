@@ -20,7 +20,8 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         try {
-            String source = "src/test/java/scopes/scopeTest";
+//            String source = "src/test/java/assignments/reAssignmentTest";
+            String source = "src/test/java/scopes/shadowingTest";
 
             Python3Parser parser = getParser(source);
             ParseTree antlrTree = parser.file_input();

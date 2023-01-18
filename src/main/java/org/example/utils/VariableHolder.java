@@ -1,7 +1,6 @@
 package org.example.utils;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class VariableHolder {
 
@@ -18,6 +17,4 @@ public class VariableHolder {
         this.valuesString = new HashMap<>();
         this.valuesBoolean = new HashMap<>();
     }
-
-
 }

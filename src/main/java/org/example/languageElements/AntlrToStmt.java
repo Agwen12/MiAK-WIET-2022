@@ -16,6 +16,13 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
 
     private final List<String> semanticErrors;
 
+    @Override
+    public Stmt visitShadowVariable(Python3Parser.ShadowVariableContext ctx) {
+        String name = ctx.getChild(1).getText();
+
+        return new Variable(name, true);
+    }
+
     public AntlrToStmt(List<String> semanticErrors) {
         this.vars = new LinkedList<>();
         this.semanticErrors = semanticErrors;
@@ -243,5 +250,14 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         }
 
         return new ScopeBlock(name, stmts);
+    }
+
+    @Override
+    public Stmt visitReAssignment(Python3Parser.ReAssignmentContext ctx) {
+        String name = ctx.getChild(0).getText();
+
+        Stmt exp = visit(ctx.getChild(2));
+
+        return new ReAssignment(name, exp);
     }
 }

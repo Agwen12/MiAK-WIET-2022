@@ -58,6 +58,7 @@ file_input: (NEWLINE | stmt)* EOF #FileInput
           ;
 
 stmt: assignment_stmt
+    | reassignment_stmt
     | expr
     | logical_expr
     | condition
@@ -67,6 +68,10 @@ stmt: assignment_stmt
 
 assignment_stmt: TYPE NAME '=' expr # Assignment
                ;
+
+reassignment_stmt: NAME '=' expr # ReAssignment
+                 ;
+
 //flow_stmt: break_stmt
 //         | continue_stmt
 //         ;
@@ -86,6 +91,7 @@ expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
     | expr ADD expr # Addition
     | expr SUB expr # Subtraction
     | NAME          # Variable
+    | '@'NAME       # ShadowVariable
     | NUMBER        # Number
     | FLOAT_NUMBER  # FloatNumber
     | BOOLEAN       # Bool

@@ -67,6 +67,35 @@ public class StmtProcessor {
                     throw new RuntimeException("Error while assigning variable: " + ass.name + " of type: " + ass.type +
                             "to value: " + ass.value);
                 }
+            } else if (stmt instanceof ReAssignment reAssignment) {
+                String name = reAssignment.name;
+                var res = getEval(reAssignment.value);
+                VariableHolder scopeLast = vars.getLast();
+                VariableHolder scope;
+                int idx = vars.size() - 1;
+                boolean done = false;
+                while (idx >= 0 && !done) {
+                    scope = vars.get(idx);
+                    if (scope.valuesInt.containsKey(name)) {
+                        scope.valuesInt.put(name, (Integer) res);
+//                        scopeLast.valuesInt.put(name, (Integer) res);
+                        done = true;
+                    } else if (scope.valuesFloat.containsKey(name)) {
+                        scope.valuesFloat.put(name, (Float) res);
+//                        scopeLast.valuesFloat.put(name, (Float) res);
+                        done = true;
+                    } else if (scope.valuesString.containsKey(name)) {
+                        scope.valuesString.put(name, (String) res);
+//                        scopeLast.valuesString.put(name, (String) res);
+                        done = true;
+                    } else if (scope.valuesBoolean.containsKey(name)) {
+                        scope.valuesBoolean.put(name, (Integer) res);
+//                        scopeLast.valuesBoolean.put(name, (Integer) res);
+                        done = true;
+                    }
+                    idx--;
+                }
+
             } else if (stmt instanceof ScopeBlock scopeBlock) {
                 vars.add(new VariableHolder());
                 evaluations.addAll(getEvaluationResult(scopeBlock.getStmts()));
@@ -82,6 +111,7 @@ public class StmtProcessor {
         return evaluations;
     }
 
+
     // TODO reszta możliwości, re-assignment
 
 
@@ -90,7 +120,8 @@ public class StmtProcessor {
         if (stmt instanceof Number num) {
             res = num.number;
         } else if (stmt instanceof Variable var) {
-            int idx = vars.size() - 1;
+            int idx =  var.isShadowed  ? vars.size() - 2 : vars.size() - 1;
+            if (idx < 0) throw new RuntimeException("Trying to access scope that doesn't exist!");
             while (idx >= 0 && res == null) {
                 VariableHolder c = vars.get(idx);
                 if (c.valuesInt.containsKey(var.name)) res = c.valuesInt.get(var.name);
