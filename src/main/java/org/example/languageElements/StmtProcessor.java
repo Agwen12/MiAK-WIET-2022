@@ -1,6 +1,7 @@
 package org.example.languageElements;
 
 import org.example.languageElements.comparisons.*;
+import org.example.languageElements.exceptions.VariableNotExistException;
 import org.example.utils.VariableHolder;
 
 import java.util.*;
@@ -8,6 +9,53 @@ import java.util.stream.Collectors;
 
 public class StmtProcessor {
 
+
+    private final static String POOP = """
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡛⠛⠷⣶⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⡇⠀⠀⠀⠙⠻⣷⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⠟⠀⠀⠀⠀⠀⠀⠈⣹⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡇⠀⠀⠀⠀⠀⣠⡴⠞⠉⠈⠻⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣿⡧⠤⠤⠶⠖⠋⠉⠀⠀⠀⠀⠀⢹⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⠞⠉⠀⠉⠙⠻⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⣀⣀⣀⠀⠀⠀⠀⢀⣠⡴⠞⠉⠀⢀⣀⣀⣀⠀⠀⠘⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣿⣆⣴⠟⠉⠉⠉⠛⢶⡖⠛⠉⠁⠀⠀⢠⡾⠋⠉⠈⠉⠻⣦⣰⣿⣀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⢀⣤⣾⠟⠋⡿⠁⢀⣾⣿⣷⣄⠈⢿⡀⠀⠀⠀⢠⡟⠀⢠⣾⣿⣷⡄⠘⣿⠉⠛⢿⣦⡀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⢠⣿⠏⠀⠀⢸⡇⠀⢸⣿⣿⣿⣿⠀⢸⡇⠀⠀⠀⢸⡇⠀⣿⣿⣿⣿⣧⠀⢹⡇⠀⠀⠙⣿⡆⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⢸⡏⠀⠀⠀⠘⣧⠀⠘⣿⣿⣿⡟⠀⣸⠇⠀⣀⣤⢾⣇⠀⠹⣿⣿⣿⠇⠀⣾⠁⠀⠀⠀⢸⣿⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⢸⣷⠀⠀⠀⠀⠹⣧⡀⠈⠉⠁⢀⣴⠿⠞⠋⠉⠀⠀⠻⣦⡀⠈⠉⠁⣠⡾⠃⠀⠀⠀⠀⣾⡏⠀⠀⠀⠀
+            ⠀⠀⢀⣠⣶⠿⠛⠛⠛⠛⠛⠛⠉⠙⠛⠒⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⠛⠚⠛⠉⠀⠀⠀⠀⢀⡼⠿⢷⣦⣄⠀⠀
+            ⠀⣠⡿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣟⠛⠛⠒⠶⠶⠶⠶⠶⠶⠶⠖⠚⠛⢛⡷⠀⠀⠀⣀⡴⠋⠀⠀⠀⠈⠻⣷⡄
+            ⢰⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢷⣄⡀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡶⠛⢁⣠⡴⠞⠋⠀⠀⠀⠀⠀⠀⠀⠘⣿
+            ⢸⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠓⠶⠶⠦⠶⠶⣚⣫⡥⠶⠚⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿
+            ⠈⢿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⡤⠴⠖⠚⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⡿⠃
+            ⠀⠈⠛⣷⣦⣤⣤⣤⣤⣤⣤⣶⡶⠾⠿⠟⠿⠿⠿⠶⣶⣶⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣶⠶⠿⠛⠉⠀⠀
+            """;
+    private final static String BUG = """
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠀⠀⠀⠀⠀⣤⡀⠀⣰⣿⣶⣄⠀⠀⣾⠃⠀⠀⠀⣶⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⡀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣶⣶⣿⣤⡀⠀⠀⣹⡇⠀⠀⠀⠀⠀⠀
+            ⠀⠈⠻⣦⡀⠀⠀⠀⢻⣿⣿⡿⠛⠛⢻⣿⡟⠉⠉⠻⣷⣴⠟⠀⠀⠀⠀⠀⠀⠀
+            ⠀⠀⠀⠈⠿⣦⣤⣤⣾⣿⣿⣇⣀⣠⣾⣿⣷⣀⢀⣠⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀            #######                                 #
+            ⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠿⠻⢿⣿⣿⣿⣿⣿⣿⣿⣇⢈⣿⠀⠀⠀⠀⠀⠀⠀            #       #####  #####   ####  #####     ###
+            ⠀⠀⠀⣤⡀⠀⠀⢸⣿⣏⠀⠀⠈⣿⣿⣿⣿⣿⠟⠉⠙⢿⣿⣀⣀⣀⡀⠀⠀⠀            #       #    # #    # #    # #    #    ###
+            ⠀⠀⠀⠈⠙⠷⠤⠼⢿⣿⣦⣤⣴⠟⠋⠛⢿⣿⣄⠀⣀⣾⠏⠉⠉⠉⠙⠳⠀⠀            #       #    # #    # #    # #    #    ###
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣇⣘⣧⡀⠀⠀⣸⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀            #####   #    # #    # #    # #    #     #
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⡿⠿⣿⣿⣿⣧⡤⠜⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀            #       #####  #####  #    # #####
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀            #       #   #  #   #  #    # #   #      #
+            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀            ####### #    # #    #  ####  #    #     #
+            """;
+    private final static String ERROR_SIGN = """
+                    #######
+                    #       #####  #####   ####  #####
+                    #       #    # #    # #    # #    #
+                    #####   #    # #    # #    # #    #
+                    #       #####  #####  #    # #####
+                    #       #   #  #   #  #    # #   #
+                    ####### #    # #    #  ####  #    #
+        """;
     public List<Stmt> stmtList;
     public  LinkedList<VariableHolder> vars = new LinkedList<>();
 
@@ -21,10 +69,6 @@ public class StmtProcessor {
     public StmtProcessor(List<Stmt> stmtList) {
         this.stmtList = stmtList;
         vars.add(new VariableHolder());
-//        this.valuesInt = new HashMap<>();
-//        this.valuesFloat = new HashMap<>();
-//        this.valuesString = new HashMap<>();
-//        this.valuesBoolean = new HashMap<>();
     }
 
     public List<String> getEvaluationResult(List<Stmt> stmts) {
@@ -34,7 +78,7 @@ public class StmtProcessor {
             if (stmt instanceof Assignment ass) {
                 var res = getEval(ass.value);
                 boolean success = false;
-                if (isDeclared(ass.name)) throw new RuntimeException("Variable: " + ass.name + " is already declared!");
+                if (isDeclared(ass.name)) throwError("Variable: " + ass.name + " is already defined", ass);
                 switch (ass.type) {
                     case "int" -> {
                         if (res instanceof Integer) {
@@ -64,8 +108,8 @@ public class StmtProcessor {
                 if (success) {
                     evaluations.add(ass.name + " declared with value: " + getEval(ass.value) + " and type: " + ass.type);
                 } else {
-                    throw new RuntimeException("Error while assigning variable: " + ass.name + " of type: " + ass.type +
-                            "to value: " + ass.value);
+                    throwError("Error while assigning variable: " + ass.name + " of type: " + ass.type +
+                            " to value: " + ass.value, ass);
                 }
             } else if (stmt instanceof ReAssignment reAssignment) {
                 String name = reAssignment.name;
@@ -78,22 +122,22 @@ public class StmtProcessor {
                     scope = vars.get(idx);
                     if (scope.valuesInt.containsKey(name)) {
                         scope.valuesInt.put(name, (Integer) res);
-//                        scopeLast.valuesInt.put(name, (Integer) res);
                         done = true;
                     } else if (scope.valuesFloat.containsKey(name)) {
                         scope.valuesFloat.put(name, (Float) res);
-//                        scopeLast.valuesFloat.put(name, (Float) res);
                         done = true;
                     } else if (scope.valuesString.containsKey(name)) {
                         scope.valuesString.put(name, (String) res);
-//                        scopeLast.valuesString.put(name, (String) res);
                         done = true;
                     } else if (scope.valuesBoolean.containsKey(name)) {
                         scope.valuesBoolean.put(name, (Integer) res);
-//                        scopeLast.valuesBoolean.put(name, (Integer) res);
                         done = true;
                     }
                     idx--;
+                }
+
+                if (idx < 0 && !done) {
+                    throwError("The variable: " + name + " is not declared", reAssignment);
                 }
 
             } else if (stmt instanceof ScopeBlock scopeBlock) {
@@ -121,7 +165,8 @@ public class StmtProcessor {
             res = num.number;
         } else if (stmt instanceof Variable var) {
             int idx =  var.isShadowed  ? vars.size() - 2 : vars.size() - 1;
-            if (idx < 0) throw new RuntimeException("Trying to access scope that doesn't exist!");
+//            if (idx < 0) throw new RuntimeException("Trying to access scope that doesn't exist!");
+            if (idx < 0) throwError("Trying to access scope that doesn't exist!", var);
             while (idx >= 0 && res == null) {
                 VariableHolder c = vars.get(idx);
                 if (c.valuesInt.containsKey(var.name)) res = c.valuesInt.get(var.name);
@@ -139,7 +184,8 @@ public class StmtProcessor {
             } else if (left instanceof Integer && right instanceof Integer) {
                 res = (Integer) left + (Integer) right;
             } else {
-                throw new RuntimeException("Error while performing addition! Types dont match");
+                throwError("Error while performing addition! Types dont match", add);
+//                throw new RuntimeException("Error while performing addition! Types dont match");
             }
 
         } else if (stmt instanceof Multiplication mul) {
@@ -150,7 +196,7 @@ public class StmtProcessor {
             } else if (left instanceof Integer && right instanceof Integer) {
                 res = (Integer) left * (Integer) right;
             } else {
-                throw new RuntimeException("Error while performing multiplication! Types dont match");
+                throwError("Error while performing multiplication! Types dont match", mul);
             }
 
         } else if (stmt instanceof Subtraction sub) {
@@ -161,7 +207,7 @@ public class StmtProcessor {
             } else if (left instanceof Integer && right instanceof Integer) {
                 res = (Integer) left - (Integer) right;
             } else {
-                throw new RuntimeException("Error while performing subtraction! Types dont match");
+                throwError("Error while performing subtraction! Types dont match", sub);
             }
         } else if (stmt instanceof Division div) {
             var left = getEval(div.left);
@@ -171,7 +217,7 @@ public class StmtProcessor {
             } else if (left instanceof Integer && right instanceof Integer) {
                 res = (Integer) left / (Integer) right;
             } else {
-                throw new RuntimeException("Error while performing division! Types dont match");
+                throwError("Error while performing division! Types dont match", div);
             }
         } else if (stmt instanceof ExprParenLog paren) {
             res = getEval(paren.inner);
@@ -196,7 +242,7 @@ public class StmtProcessor {
             } else if (left instanceof  Integer && right instanceof  Integer) {
                 res = (int)left > (int)right ? 1 : 0;
             } else {
-                throw new RuntimeException("Error while comparing variables: Variables are not of the same type" );
+                throwError("Error while comparing variables: variables are not of the same type", gt);
             }
 
         } else if (stmt instanceof Lt lt) {
@@ -207,7 +253,7 @@ public class StmtProcessor {
             } else if (left instanceof  Integer && right instanceof  Integer) {
                 res = (int)left < (int)right ? 1 : 0;
             } else {
-                throw new RuntimeException("Error while comparing variables: Variables are not of the same type" );
+                throwError("Error while comparing variables: variables are not of the same type", lt);
             }
 
         } else if (stmt instanceof Let let) {
@@ -218,7 +264,7 @@ public class StmtProcessor {
             } else if (left instanceof  Integer && right instanceof  Integer) {
                 res = (int)left <= (int)right ? 1 : 0;
             } else {
-                throw new RuntimeException("Error while comparing variables: Variables are not of the same type" );
+                throwError("Error while comparing variables: variables are not of the same type", let);
             }
 
         } else if (stmt instanceof Get get) {
@@ -229,7 +275,7 @@ public class StmtProcessor {
             } else if (left instanceof  Integer && right instanceof  Integer) {
                 res = (int)left >= (int)right ? 1 : 0;
             } else {
-                throw new RuntimeException("Error while comparing variables: Variables are not of the same type" );
+                throwError("Error while comparing variables: variables are not of the same type", get);
             }
         } else if (stmt instanceof Eq eq) {
             var left = (double)getEval(eq.left);
@@ -252,5 +298,17 @@ public class StmtProcessor {
         VariableHolder holder = vars.getLast();
         return holder.valuesInt.containsKey(name) || holder.valuesFloat.containsKey(name)
                 || holder.valuesString.containsKey(name) || holder.valuesBoolean.containsKey(name);
+    }
+
+    private void throwError(String msg, Stmt stmt) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("=".repeat(89));
+        System.err.println("+" + builder.toString() + "+");
+        System.err.println(BUG);
+        System.err.println("+" + builder.toString() + "+");
+        System.err.println("||  " + "Error encountered in line: " + stmt.getLine() + " position: " + stmt.getColumn());
+        System.err.println("||  Message:  " + msg);
+        System.err.println("+=============----- --- -");
+        System.exit(1);
     }
 }

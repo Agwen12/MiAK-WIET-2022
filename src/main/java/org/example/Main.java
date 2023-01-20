@@ -11,17 +11,16 @@ import org.example.languageElements.StmtProcessor;
 import java.io.IOException;
 
 
-//TODO Sprawdzanie typów
-//TODO nie można przerzucać na C
-//TODO rejestry na zmienne
 //TODO errory
-//TODO scope'y
 public class Main {
 
     public static void main(String[] args) throws IOException {
         try {
 //            String source = "src/test/java/assignments/reAssignmentTest";
-            String source = "src/test/java/scopes/shadowingTest";
+//            String source = "src/test/java/scopes/shadowingTest";
+//            String source = "src/test/java/assignments/assignTypesTest";
+            String source = "src/test/java/assignments/assignTypesFailTest";
+//            String source = "src/test/java/assignments/unsuccessfulReassignmentTest";
 
             Python3Parser parser = getParser(source);
             ParseTree antlrTree = parser.file_input();
