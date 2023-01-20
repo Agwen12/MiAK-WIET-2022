@@ -2,6 +2,11 @@ int a = 1
 int b = 4
 int c = 5
 int d = 10
-float h = 100
-a = a + 1
-a * b < h
+float h = 100.
+float i = 5.
+float j = 3.
+a * b < d
+d < a * b
+
+h >= i * j
+i * j <= h

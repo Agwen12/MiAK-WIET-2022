@@ -8,11 +8,20 @@ import org.example.languageElements.comparisons.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
 
     private final List<String> vars;
+
     private final List<String> semanticErrors;
+
+    @Override
+    public Stmt visitShadowVariable(Python3Parser.ShadowVariableContext ctx) {
+        String name = ctx.getChild(1).getText();
+
+        return new Variable(name, true);
+    }
 
     public AntlrToStmt(List<String> semanticErrors) {
         this.vars = new LinkedList<>();
@@ -31,12 +40,12 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         int line = nameToken.getLine();
         int col = nameToken.getCharPositionInLine() + 1;
         String name = ctx.getChild(1).getText();
-        if (vars.contains(name)) {
-            semanticErrors.add("Error variable " + name + "has already been" +
-                    " declared in line: " + line + "col: " + col);
-        } else {
+//        if (vars.contains(name)) {
+//            semanticErrors.add("Error variable " + name + " has already been" +
+//                    " declared in line: " + line + "col: " + col);
+//        } else {
             vars.add(name);
-        }
+//        }
 
 
         Stmt exp = visit(ctx.getChild(3));
@@ -228,4 +237,27 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
 //    public Stmt  visitBlock(Python3Parser.BlockContext ctx) {
 //
 //    }
+
+
+    @Override
+    public Stmt visitScope_block(Python3Parser.Scope_blockContext ctx) {
+        String name = ctx.getChild(0).getText();
+        name = name.substring(1, name.length() - 1);
+        List<Stmt> stmts = new LinkedList<>();
+
+        for (int j = 1; j < ctx.getChildCount() - 1; j++) {
+            stmts.add(visit(ctx.getChild(j)));
+        }
+
+        return new ScopeBlock(name, stmts);
+    }
+
+    @Override
+    public Stmt visitReAssignment(Python3Parser.ReAssignmentContext ctx) {
+        String name = ctx.getChild(0).getText();
+
+        Stmt exp = visit(ctx.getChild(2));
+
+        return new ReAssignment(name, exp);
+    }
 }

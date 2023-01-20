@@ -4,6 +4,8 @@ public class Variable extends Stmt {
     String name;
     String type;
 
+    boolean isShadowed = false;
+
     public Variable(String name) {
         this.name = name;
     }
@@ -12,8 +14,15 @@ public class Variable extends Stmt {
         this.type = type;
     }
 
+    public Variable(String name, boolean isShadowed) {
+        this.name = name;
+        this.isShadowed = isShadowed;
+    }
+
     @Override
     public String toString() {
-        return "(" + type + "): " + name;
+        if (type != null) return "(" + type + "): " + name;
+        if (isShadowed) return "@" + name;
+        return name;
     }
 }

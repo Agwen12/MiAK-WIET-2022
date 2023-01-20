@@ -58,20 +58,20 @@ file_input: (NEWLINE | stmt)* EOF #FileInput
           ;
 
 stmt: assignment_stmt
+    | reassignment_stmt
     | expr
     | logical_expr
     | condition
     | print_stmt
+    | scope_block
     ;
-
-//small_stmt: assignment_stmt # Assignment
-//          | flow_stmt #FlowStms
-//          | print_stmt #Print
-//          | expr #
-//          ;
 
 assignment_stmt: TYPE NAME '=' expr # Assignment
                ;
+
+reassignment_stmt: NAME '=' expr # ReAssignment
+                 ;
+
 //flow_stmt: break_stmt
 //         | continue_stmt
 //         ;
@@ -91,6 +91,7 @@ expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
     | expr ADD expr # Addition
     | expr SUB expr # Subtraction
     | NAME          # Variable
+    | '@'NAME       # ShadowVariable
     | NUMBER        # Number
     | FLOAT_NUMBER  # FloatNumber
     | BOOLEAN       # Bool
@@ -118,11 +119,16 @@ condition_block: OPEN_PAREN logical_expr CLOSE_PAREN block
 block: COLON NEWLINE (stmt NEWLINE)* END NEWLINE?
      ;
 
+scope_block: SCOPE_BLOCK_NAME (stmt NEWLINE | NEWLINE)* SCOPE_BLOCK_END;
+
 /*
  * lexer rules
  */
 
 //todo:castowanie
+
+SCOPE_BLOCK_NAME: '[' [A-Z]* ']' NEWLINE;
+SCOPE_BLOCK_END: '[' END ']' NEWLINE;
 
 TYPE
  : 'string'

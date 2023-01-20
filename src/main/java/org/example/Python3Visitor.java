@@ -33,6 +33,13 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAssignment(Python3Parser.AssignmentContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code ReAssignment}
+	 * labeled alternative in {@link Python3Parser#reassignment_stmt}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReAssignment(Python3Parser.ReAssignmentContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Print}
 	 * labeled alternative in {@link Python3Parser#print_stmt}.
 	 * @param ctx the parse tree
@@ -67,6 +74,13 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVariable(Python3Parser.VariableContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ShadowVariable}
+	 * labeled alternative in {@link Python3Parser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitShadowVariable(Python3Parser.ShadowVariableContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Subtraction}
 	 * labeled alternative in {@link Python3Parser#expr}.
@@ -197,4 +211,10 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitBlock(Python3Parser.BlockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Python3Parser#scope_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitScope_block(Python3Parser.Scope_blockContext ctx);
 }
