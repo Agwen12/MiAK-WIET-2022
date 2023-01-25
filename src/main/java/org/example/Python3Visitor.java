@@ -40,12 +40,37 @@ public interface Python3Visitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitReAssignment(Python3Parser.ReAssignmentContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link Python3Parser#function_declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction_declaration(Python3Parser.Function_declarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Python3Parser#function_call}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction_call(Python3Parser.Function_callContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Python3Parser#return}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturn(Python3Parser.ReturnContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Print}
 	 * labeled alternative in {@link Python3Parser#print_stmt}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitPrint(Python3Parser.PrintContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code FuncCall}
+	 * labeled alternative in {@link Python3Parser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncCall(Python3Parser.FuncCallContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code Multiplication}
 	 * labeled alternative in {@link Python3Parser#expr}.

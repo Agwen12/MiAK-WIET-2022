@@ -2,6 +2,8 @@ package org.example.languageElements;
 
 import org.example.languageElements.comparisons.*;
 import org.example.languageElements.exceptions.VariableNotExistException;
+import org.example.languageElements.functions.FuncCall;
+import org.example.languageElements.functions.Function;
 import org.example.utils.VariableHolder;
 
 import java.util.*;
@@ -9,28 +11,6 @@ import java.util.stream.Collectors;
 
 public class StmtProcessor {
 
-
-    private final static String POOP = """
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡛⠛⠷⣶⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⡇⠀⠀⠀⠙⠻⣷⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣾⠟⠀⠀⠀⠀⠀⠀⠈⣹⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡇⠀⠀⠀⠀⠀⣠⡴⠞⠉⠈⠻⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣿⡧⠤⠤⠶⠖⠋⠉⠀⠀⠀⠀⠀⢹⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣾⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣾⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⠞⠉⠀⠉⠙⠻⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⣀⣀⣀⠀⠀⠀⠀⢀⣠⡴⠞⠉⠀⢀⣀⣀⣀⠀⠀⠘⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣿⣆⣴⠟⠉⠉⠉⠛⢶⡖⠛⠉⠁⠀⠀⢠⡾⠋⠉⠈⠉⠻⣦⣰⣿⣀⠀⠀⠀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⠀⢀⣤⣾⠟⠋⡿⠁⢀⣾⣿⣷⣄⠈⢿⡀⠀⠀⠀⢠⡟⠀⢠⣾⣿⣷⡄⠘⣿⠉⠛⢿⣦⡀⠀⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⢠⣿⠏⠀⠀⢸⡇⠀⢸⣿⣿⣿⣿⠀⢸⡇⠀⠀⠀⢸⡇⠀⣿⣿⣿⣿⣧⠀⢹⡇⠀⠀⠙⣿⡆⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⢸⡏⠀⠀⠀⠘⣧⠀⠘⣿⣿⣿⡟⠀⣸⠇⠀⣀⣤⢾⣇⠀⠹⣿⣿⣿⠇⠀⣾⠁⠀⠀⠀⢸⣿⠀⠀⠀⠀
-            ⠀⠀⠀⠀⠀⢸⣷⠀⠀⠀⠀⠹⣧⡀⠈⠉⠁⢀⣴⠿⠞⠋⠉⠀⠀⠻⣦⡀⠈⠉⠁⣠⡾⠃⠀⠀⠀⠀⣾⡏⠀⠀⠀⠀
-            ⠀⠀⢀⣠⣶⠿⠛⠛⠛⠛⠛⠛⠉⠙⠛⠒⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⠛⠚⠛⠉⠀⠀⠀⠀⢀⡼⠿⢷⣦⣄⠀⠀
-            ⠀⣠⡿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣟⠛⠛⠒⠶⠶⠶⠶⠶⠶⠶⠖⠚⠛⢛⡷⠀⠀⠀⣀⡴⠋⠀⠀⠀⠈⠻⣷⡄
-            ⢰⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢷⣄⡀⠀⠀⠀⠀⠀⠀⠀⢀⣠⡶⠛⢁⣠⡴⠞⠋⠀⠀⠀⠀⠀⠀⠀⠘⣿
-            ⢸⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠓⠶⠶⠦⠶⠶⣚⣫⡥⠶⠚⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿
-            ⠈⢿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣤⡤⠴⠖⠚⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⡿⠃
-            ⠀⠈⠛⣷⣦⣤⣤⣤⣤⣤⣤⣶⡶⠾⠿⠟⠿⠿⠿⠶⣶⣶⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣤⣶⠶⠿⠛⠉⠀⠀
-            """;
     private final static String BUG = """
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -47,15 +27,6 @@ public class StmtProcessor {
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀            #       #   #  #   #  #    # #   #      #
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀            ####### #    # #    #  ####  #    #     #
             """;
-    private final static String ERROR_SIGN = """
-                    #######
-                    #       #####  #####   ####  #####
-                    #       #    # #    # #    # #    #
-                    #####   #    # #    # #    # #    #
-                    #       #####  #####  #    # #####
-                    #       #   #  #   #  #    # #   #
-                    ####### #    # #    #  ####  #    #
-        """;
     public List<Stmt> stmtList;
     public  LinkedList<VariableHolder> vars = new LinkedList<>();
 
@@ -64,10 +35,12 @@ public class StmtProcessor {
     public Map<String, Float> valuesFloat; //symbol table used for storing values for variables
     public Map<String, String> valuesString; //symbol table used for storing values for variables
     public Map<String, Integer> valuesBoolean; //symbol table used for storing values for variables
+    public Map<String, Function> functions;
 
 
     public StmtProcessor(List<Stmt> stmtList) {
         this.stmtList = stmtList;
+        functions = new HashMap<>();
         vars.add(new VariableHolder());
     }
 
@@ -109,7 +82,7 @@ public class StmtProcessor {
                     evaluations.add(ass.name + " declared with value: " + getEval(ass.value) + " and type: " + ass.type);
                 } else {
                     throwError("Error while assigning variable: " + ass.name + " of type: " + ass.type +
-                            " to value: " + ass.value, ass);
+                            " to value: " + ass.value + " / " + res, ass);
                 }
             } else if (stmt instanceof ReAssignment reAssignment) {
                 String name = reAssignment.name;
@@ -144,6 +117,9 @@ public class StmtProcessor {
                 vars.add(new VariableHolder());
                 evaluations.addAll(getEvaluationResult(scopeBlock.getStmts()));
                 vars.removeLast();
+            } else if (stmt instanceof Function func) {
+                functions.put(func.getName(), func);
+                System.out.println("Function: " + func.getName() + " parsed");
             } else {
                 String input = stmt.toString();
                 var res = getEval(stmt);
@@ -163,6 +139,16 @@ public class StmtProcessor {
         Object res = null;
         if (stmt instanceof Number num) {
             res = num.number;
+        } else if (stmt instanceof FuncCall call) {
+            vars.add(new VariableHolder());
+            getEvaluationResult(call.getArgs());
+            List<Stmt> g = functions.get(call.getFuncName()).getBody();
+            Stmt last = g.get(g.size() - 1);
+            g.remove(g.size() - 1);
+            getEvaluationResult(g);
+            res = getEval(last);
+            vars.removeLast();
+//            res = "DUPA";
         } else if (stmt instanceof Variable var) {
             int idx =  var.isShadowed  ? vars.size() - 2 : vars.size() - 1;
 //            if (idx < 0) throw new RuntimeException("Trying to access scope that doesn't exist!");

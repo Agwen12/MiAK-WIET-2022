@@ -19,7 +19,8 @@ public class Main {
 //            String source = "src/test/java/assignments/reAssignmentTest";
 //            String source = "src/test/java/scopes/shadowingTest";
 //            String source = "src/test/java/assignments/assignTypesTest";
-            String source = "src/test/java/assignments/assignTypesFailTest";
+//            String source = "src/test/java/assignments/assignTypesFailTest";
+            String source = "src/test/java/function/functionTest";
 //            String source = "src/test/java/assignments/unsuccessfulReassignmentTest";
 
             Python3Parser parser = getParser(source);

@@ -64,6 +64,7 @@ stmt: assignment_stmt
     | condition
     | print_stmt
     | scope_block
+    | function_declaration
     ;
 
 assignment_stmt: TYPE NAME '=' expr # Assignment
@@ -72,15 +73,11 @@ assignment_stmt: TYPE NAME '=' expr # Assignment
 reassignment_stmt: NAME '=' expr # ReAssignment
                  ;
 
-//flow_stmt: break_stmt
-//         | continue_stmt
-//         ;
+function_declaration: 'func' NAME '(' (TYPE NAME)* ')' '=>' TYPE NEWLINE (stmt NEWLINE)* return NEWLINE END ;
 
-//break_stmt: 'break'
-//          ;
+function_call: '$' NAME '(' (expr) (',' (expr))* ')';
 
-//continue_stmt: 'continue'
-//             ;
+return: 'return' NAME? ;
 
 print_stmt: PRINT (STRING | expr) # Print
           ;
@@ -96,6 +93,7 @@ expr: OPEN_PAREN expr CLOSE_PAREN # ExprParen
     | FLOAT_NUMBER  # FloatNumber
     | BOOLEAN       # Bool
     | STRING        # StringWord
+    | function_call # FuncCall
     ;
 
 logical_expr: NOT OPEN_PAREN logical_expr CLOSE_PAREN  # Not

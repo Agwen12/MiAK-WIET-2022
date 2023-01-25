@@ -4,6 +4,7 @@ public class Variable extends Stmt {
     String name;
     String type;
 
+
     boolean isShadowed = false;
 
     public Variable(String name) {

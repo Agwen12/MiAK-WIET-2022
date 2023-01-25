@@ -1,0 +1,11 @@
+
+func f (int a) => int
+int d = 2
+int g = 3
+g = g + d
+return g
+end
+
+int c = 2
+
+$f(1, 2, 3)

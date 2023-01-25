@@ -4,6 +4,9 @@ import org.antlr.v4.runtime.Token;
 import org.example.Python3BaseVisitor;
 import org.example.Python3Parser;
 import org.example.languageElements.comparisons.*;
+import org.example.languageElements.functions.FuncCall;
+import org.example.languageElements.functions.Function;
+import org.example.utils.Types;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -250,5 +253,59 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         Stmt exp = visit(ctx.getChild(2));
 
         return new ReAssignment(name, exp).setPosition(ctx);
+    }
+
+    @Override
+    public Stmt visitFunction_declaration(Python3Parser.Function_declarationContext ctx) {
+        String name = ctx.getChild(1).getText();
+        List<Variable> vars = new LinkedList<>();
+        List<Stmt> stmts = new LinkedList<>();
+        int i = 3;
+        while (!")".equals(ctx.getChild(i).getText())) {
+            String varType = ctx.getChild(i).getText();
+            String varName = ctx.getChild(i + 1).getText();
+            Variable var = new Variable(varName, varType);
+            vars.add(var);
+            i += 2;
+        }
+        Types returnType = switch (ctx.getChild(i + 2).getText()) {
+            case "string" -> Types.STRING;
+            case "int" -> Types.INT;
+            case "float" -> Types.FLOAT;
+            case "boolean" -> Types.BOOLEAN;
+            default -> null;
+        };
+
+        i += 4;
+        while (!"end".equals(ctx.getChild(i).getText())) {
+            stmts.add(visit(ctx.getChild(i)));
+            i += 2;
+        }
+
+        System.out.println(vars);
+        System.out.println(stmts);
+
+
+        return new Function(name, returnType, vars, stmts).setPosition(ctx);
+    }
+
+
+    @Override
+    public Stmt visitFunction_call(Python3Parser.Function_callContext ctx) {
+        List<Stmt> args = new LinkedList<>();
+        int i = 3;
+        while (!")".equals(ctx.getChild(i - 1).getText())) {
+            System.out.println(ctx.getChild(i).getText());
+            Stmt c = visit(ctx.getChild(i));
+            args.add(visit(ctx.getChild(i)));
+            i += 2;
+        }
+
+        return new FuncCall(ctx.getChild(1).getText(), args).setPosition(ctx);
+    }
+
+    @Override
+    public Stmt visitReturn(Python3Parser.ReturnContext ctx) {
+        return new Variable(ctx.getChild(1).getText());
     }
 }
