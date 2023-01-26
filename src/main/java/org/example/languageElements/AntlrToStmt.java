@@ -195,40 +195,50 @@ public class AntlrToStmt extends Python3BaseVisitor<Stmt> {
         return new Striing(numText).setPosition(ctx);
     }
 
-//    @Override
-//    public Stmt visitCondition(Python3Parser.ConditionContext ctx) {
-//        List<Python3Parser.Condition_blockContext> conditions =  ctx.condition_block();
-//
-//        boolean evaluatedBlock = false;
-//
-//        for(Python3Parser.Condition_blockContext condition : conditions) {
-//
-//            Stmt evaluated = this.visit(condition.logical_expr());
-//
-//            if(evaluated) {
-//                evaluatedBlock = true;
-//                this.visit(condition.block());
-//                break;
-//            }
-//        }
-//
-//        if(!evaluatedBlock && ctx.block() != null) {
-//            this.visit(ctx.block());
-//        }
-//
-//        return new Void();
-//    }
-//
-//    @Override
-//    public Stmt visitCondition_block(Python3Parser.Condition_blockContext ctx) {
-//
-//    }
-//
-//    @Override
-//    public Stmt  visitBlock(Python3Parser.BlockContext ctx) {
-//
-//    }
+    @Override
+    public Stmt visitCondition(Python3Parser.ConditionContext ctx) {
+        List<Stmt> condition_blocks = new LinkedList<>();
+        Stmt elseBlock = null;
 
+        for (int j = 1; j < ctx.getChildCount(); j++) {
+            if (ctx.getChild(j).getText().equals("else")) {
+                elseBlock = visit(ctx.getChild(j + 1));
+                break;
+            } else if (ctx.getChild(j).getText().equals("elif")) {
+                continue;
+            }
+            condition_blocks.add(visit(ctx.getChild(j)));
+        }
+
+        return new Condition(condition_blocks, elseBlock).setPosition(ctx);
+    }
+
+    @Override
+    public Stmt visitCondition_block(Python3Parser.Condition_blockContext ctx) {
+        Stmt logicalExpression = visit(ctx.getChild(1));
+        Stmt block = visit(ctx.getChild(3));
+        return new ConditionBlock(logicalExpression, block).setPosition(ctx);
+    }
+
+    @Override
+    public Stmt visitBlock(Python3Parser.BlockContext ctx) {
+        List<Stmt> stmts = new LinkedList<>();
+
+        for (int j = 1; j < ctx.getChildCount(); j++) {
+            if (ctx.getChild(j).getText().equals("end")) {
+                break;
+            }
+            stmts.add(visit(ctx.getChild(j)));
+        }
+
+        return new Block(stmts).setPosition(ctx);
+    }
+
+    @Override
+    public Stmt visitWhilee(Python3Parser.WhileeContext ctx) {
+        Stmt block = visit(ctx.getChild(1));
+        return new Whilee(block).setPosition(ctx);
+    }
 
     @Override
     public Stmt visitScope_block(Python3Parser.Scope_blockContext ctx) {

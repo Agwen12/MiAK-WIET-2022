@@ -19,8 +19,11 @@ public class Main {
 //            String source = "src/test/java/assignments/reAssignmentTest";
 //            String source = "src/test/java/scopes/shadowingTest";
 //            String source = "src/test/java/assignments/assignTypesTest";
-            String source = "src/test/java/assignments/assignTypesFailTest";
+//            String source = "src/test/java/assignments/assignTypesFailTest";
 //            String source = "src/test/java/assignments/unsuccessfulReassignmentTest";
+//            String source = "src/test/java/ifElse/ifElseTest.cmm";
+//            String source = "src/test/java/ifElse/ifElseTest2";
+            String source = "src/test/java/whilee/whileTest2";
 
             Python3Parser parser = getParser(source);
             ParseTree antlrTree = parser.file_input();

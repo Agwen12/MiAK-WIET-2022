@@ -144,7 +144,44 @@ public class StmtProcessor {
                 vars.add(new VariableHolder());
                 evaluations.addAll(getEvaluationResult(scopeBlock.getStmts()));
                 vars.removeLast();
-            } else {
+            } else if (stmt instanceof Condition condition) {
+                vars.add(new VariableHolder());
+                List<Stmt> conditionBlocks = condition.getConditionBlocks();
+                Stmt blockToEvaluate = null;
+                for (Stmt block : conditionBlocks) {
+                    Object res = getEval(block);
+                    if (res != null) {
+                        blockToEvaluate = block;
+                        break;
+                    }
+                }
+
+                if (blockToEvaluate == null) {
+                    blockToEvaluate = condition.getElseBlock();
+                }
+
+                evaluations.addAll(getEvaluationResult(List.of(blockToEvaluate)));
+                vars.removeLast();
+            } else if (stmt instanceof Block block) {
+                vars.add(new VariableHolder());
+                evaluations.addAll(getEvaluationResult(block.getStmts()));
+                vars.removeLast();
+            } else if (stmt instanceof ConditionBlock conditionBlock) {
+                vars.add(new VariableHolder());
+                evaluations.addAll(getEvaluationResult(List.of(conditionBlock.getBlock())));
+                vars.removeLast();
+            } else if (stmt instanceof Whilee whilee) {
+                vars.add(new VariableHolder());
+                Stmt block = whilee.getBlock();
+                while(true) {
+                    Object res = getEval(block);
+                    if (res == null) {
+                        break;
+                    }
+                    evaluations.addAll(getEvaluationResult(List.of(block)));
+                }
+                vars.removeLast();
+            }  else {
                 String input = stmt.toString();
                 var res = getEval(stmt);
                 evaluations.add(input + " is " + res);
@@ -278,17 +315,20 @@ public class StmtProcessor {
                 throwError("Error while comparing variables: variables are not of the same type", get);
             }
         } else if (stmt instanceof Eq eq) {
-            var left = (double)getEval(eq.left);
-            var right = (double)getEval(eq.right);
+            var left = (int)getEval(eq.left);
+            var right = (int)getEval(eq.right);
             res = left == right ? 1 : 0;
         } else if (stmt instanceof Neq neq) {
-            var left =(double) getEval(neq.left);
-            var right = (double)getEval(neq.right);
+            var left =(int) getEval(neq.left);
+            var right = (int)getEval(neq.right);
             res = left != right ? 1 : 0;
         } else if (stmt instanceof FloatNumber floatNumber) {
             res = floatNumber.number;
         } else if (stmt instanceof  Striing str) {
             res = str.value;
+        } else if (stmt instanceof ConditionBlock conditionBlock) {
+            var doIt = (int) getEval(conditionBlock.getLogicalExpression());
+            res = (doIt == 1) ? conditionBlock.getBlock() : null;
         }
 
         return res;
