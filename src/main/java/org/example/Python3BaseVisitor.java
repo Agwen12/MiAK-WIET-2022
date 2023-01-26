@@ -224,4 +224,11 @@ public class Python3BaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitScope_block(Python3Parser.Scope_blockContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitWhilee(Python3Parser.WhileeContext ctx) { return visitChildren(ctx); }
 }

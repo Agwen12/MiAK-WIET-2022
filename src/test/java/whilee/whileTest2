@@ -1,0 +1,9 @@
+int a = 0
+while (a < 5):
+    int y = a
+    while (2 < y and y < 6):
+        int second = y
+        y = y + 1
+    end
+    a = a + 1
+end

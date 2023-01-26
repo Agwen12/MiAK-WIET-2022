@@ -1,8 +1,14 @@
 int a = 12
 int b = 13
-if (a < b and !((a == b or a != b) and 12 < b)):
+if (b == 13):
     int c = 12
     int d = 49
+    if (c > d):
+        int x = 123
+    end
+    else:
+        int y = 987
+    end
 end
 elif (12 > b):
     int c = 14
